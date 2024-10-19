@@ -13,10 +13,16 @@ export async function createSessionCookies({ _id, userType, token }: JwtDto) {
 
 export async function getToken() {
   const res = await AsyncStorage.getItem(TOKEN_COOKIE);
+
   return res;
 }
 export async function getPatientId(): Promise<string> {
   const res = await AsyncStorage.getItem(ID);
   if (!res) throw Error('No patient id found');
   return res;
+}
+export async function removeSessionCokkies() {
+  await AsyncStorage.removeItem(ID);
+  await AsyncStorage.removeItem(USER_TPE);
+  await AsyncStorage.removeItem(TOKEN_COOKIE);
 }

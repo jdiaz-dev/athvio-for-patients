@@ -7,7 +7,7 @@ import { useAuthentication } from 'src/modules/authentication/adapters/out/authe
 function AuthProvider({ children }: { children: ReactNode }) {
   const { signIn } = useAuthentication();
 
-  const [isAuthenticated, setIsAuthenticated] = useState(Boolean(getToken()));
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [patient, setPatient] = useState('');
 
   const saveJwt = (data: JwtDto) => {
@@ -22,11 +22,14 @@ function AuthProvider({ children }: { children: ReactNode }) {
   const signOut = () => {};
 
   useEffect(() => {
-    const getPatient = async () => {
+    const verfifyAuthentication = async () => {
+      const isAuth = await getToken();
+
       const patient = await getPatientId();
       setPatient(patient);
+      setIsAuthenticated(isAuth == null ? false : true);
     };
-    getPatient();
+    verfifyAuthentication();
   }, []);
 
   return (

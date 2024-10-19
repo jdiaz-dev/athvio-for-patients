@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ClientProfile from './clients/ClientProfile';
 import ClientPlanList from './client-plans/ClientPlanList';
 import ChatScreen from 'src/modules/chat/adapters/in/components/Chat';
+import SignOut from 'src/modules/authentication/adapters/in/SignOut';
 
 const Tab = createBottomTabNavigator();
 
@@ -82,6 +83,16 @@ function Navigation() {
           tabBarLabel: 'Client profile',
           tabBarIcon: ({ color, size }) => {
             return <Icon name="cog" size={size} color={color} />;
+          },
+        }}
+      />
+      <Tab.Screen
+        name="..."
+        component={SignOut}
+        options={{
+          tabBarLabel: '...',
+          tabBarIcon: ({ color, size }) => {
+            return <Icon name="" size={size} color={color} />;
           },
         }}
       />
