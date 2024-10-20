@@ -1,15 +1,15 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { Button, Text, View } from 'react-native';
+import { Button, View } from 'react-native';
 
-function ClientProfile() {
+function PatientPlanList() {
   const navigation = useNavigation();
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button title="ClientProfile" onPress={() => navigation.navigate('Chat')} />
+      <Button title="PatientPlanList" onPress={() => navigation.navigate('PatientProfile', { name: 'Jane' })} />
     </View>
   );
 }
 
-export default ClientProfile;
+export default PatientPlanList;

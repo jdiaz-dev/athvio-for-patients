@@ -42,7 +42,10 @@ export function useChat() {
           },
         },
       });
-      if (response.data) dispatch(ChatSlice.newCommentReceived(response.data.saveChatComment.comments[0]));
+      if (response.data) {
+        dispatch(ChatSlice.removeLastCommentSavedInRedux());
+        dispatch(ChatSlice.newCommentReceived(response.data.saveChatComment.comments[0]));
+      }
     } catch (error) {
       dispatch(ChatSlice.addChatCommentFailure((error as ApolloError).graphQLErrors[0].message));
     }

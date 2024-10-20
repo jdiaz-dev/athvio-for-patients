@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, FlatList, StyleSheet, ListRenderItem } from 'react-native';
 import { TextInput, Button, List } from 'react-native-paper';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { AuthContext } from 'src/modules/authentication/adapters/in/context/AuthContext';
 import { useChat } from 'src/modules/chat/adapters/out/ChatActions';
 import { CommentBody } from 'src/modules/chat/adapters/out/chat';
 import { Commenter } from 'src/modules/chat/adapters/out/chat.enum';
 import { ReduxStates } from 'src/shared/types/types';
+import * as ChatSlice from 'src/modules/chat/adapters/in/slicers/ChatSlice';
 
 interface Message {
   id: string;
@@ -14,15 +16,18 @@ interface Message {
 }
 
 const ChatScreen = () => {
+  const { patient, assignedProfessional } = useContext(AuthContext);
+  const dispatch = useDispatch();
+
   const [messages, setMessages] = useState<Message[]>([]);
-  const { getChat, commentAddedSubscription } = useChat();
+  const { getChat, commentAddedSubscription, saveChatComment } = useChat();
   const { data: chatState } = useSelector((state: ReduxStates) => state.chat.chat);
 
   const [currentMessage, setCurrentMessage] = useState<string>('');
 
   const data = {
-    professional: '6673734729a8ffa437766dac',
-    patient: '66f34742ac2177ebd8ed770a',
+    professional: assignedProfessional,
+    patient,
   };
   useEffect(() => {
     const getChatHelper = async () => {
@@ -31,10 +36,24 @@ const ChatScreen = () => {
     getChatHelper();
     commentAddedSubscription(data);
   }, []);
-  const sendMessageHandler = () => {
+
+  const sendMessageHandler = async () => {
     if (currentMessage.trim()) {
-      setMessages((prevMessages) => [...prevMessages, { id: Date.now().toString(), text: currentMessage, sender: 'patient' }]);
       setCurrentMessage('');
+      const comment = {
+        _id: '',
+        commenter: Commenter.PATIENT,
+        content: currentMessage.trim(),
+        createdAt: new Date().toISOString(),
+      };
+      dispatch(ChatSlice.newCommentReceived(comment));
+      await saveChatComment({
+        patient,
+        comment: {
+          commenter: comment.commenter,
+          content: comment.content,
+        },
+      });
     }
   };
 

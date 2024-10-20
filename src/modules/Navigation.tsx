@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { CommonActions } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomNavigation } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import ClientProfile from './clients/ClientProfile';
-import ClientPlanList from './client-plans/ClientPlanList';
+import PatientProfile from './patient/PatientProfile';
+import PatientPlanList from './patient-plans/PatientPlanList';
 import ChatScreen from 'src/modules/chat/adapters/in/components/Chat';
 import SignOut from 'src/modules/authentication/adapters/in/SignOut';
 
@@ -56,8 +56,8 @@ function Navigation() {
       )}
     >
       <Tab.Screen
-        name="ClientPlanList"
-        component={ClientPlanList}
+        name="PatientPlanList"
+        component={PatientPlanList}
         options={{
           tabBarLabel: 'Plans',
           tabBarIcon: ({ color, size }) => {
@@ -75,12 +75,11 @@ function Navigation() {
           },
         }}
       />
-
       <Tab.Screen
-        name="ClientProfile"
-        component={ClientProfile}
+        name="PatientProfile"
+        component={PatientProfile}
         options={{
-          tabBarLabel: 'Client profile',
+          tabBarLabel: 'Patient profile',
           tabBarIcon: ({ color, size }) => {
             return <Icon name="cog" size={size} color={color} />;
           },

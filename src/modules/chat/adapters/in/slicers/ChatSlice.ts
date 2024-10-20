@@ -9,9 +9,12 @@ const chatSlice = createSlice({
   initialState: chatIntialState,
   reducers: {
     acceptNewPatientChat: (state, action: PayloadAction<ChatBody>) => {
-      console.log('--------action.payload', action.payload)
       state.chat.data = action.payload;
       return state;
+    },
+    removeLastCommentSavedInRedux(state){
+      state.chat.data.comments.pop()
+      return state
     },
     newCommentReceived: (state, action: PayloadAction<CommentBody>) => {
       state.chat.data.comments.push(action.payload);
@@ -26,6 +29,6 @@ const chatSlice = createSlice({
   },
 });
 
-export const { acceptNewPatientChat, newCommentReceived } = chatSlice.actions;
+export const { acceptNewPatientChat, removeLastCommentSavedInRedux, newCommentReceived } = chatSlice.actions;
 
 export default chatSlice.reducer;

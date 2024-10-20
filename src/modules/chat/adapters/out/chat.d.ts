@@ -54,7 +54,6 @@ export type GetChatResponse = {
 };
 
 export type SaveChatInput = {
-  professional: string;
   patient: string;
   comment: Pick<CommentBody, 'commenter' | 'content'>;
 };
