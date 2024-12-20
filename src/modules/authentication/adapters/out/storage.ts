@@ -2,12 +2,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { JwtDto } from './authentication.d';
 
 const TOKEN_COOKIE = 'auth.token';
-const USER_TPE = 'auth.userType';
+const ROLE = 'auth.role';
 const ID = 'auth._id';
 
-export async function createSessionCookies({ _id, userType, token }: JwtDto) {
+export async function createSessionCookies({ _id, role, token }: JwtDto) {
   await AsyncStorage.setItem(ID, _id);
-  await AsyncStorage.setItem(USER_TPE, userType);
+  await AsyncStorage.setItem(ROLE, role);
   await AsyncStorage.setItem(TOKEN_COOKIE, token);
 }
 
@@ -23,6 +23,6 @@ export async function getPatientId(): Promise<string> {
 }
 export async function removeSessionCokkies() {
   await AsyncStorage.removeItem(ID);
-  await AsyncStorage.removeItem(USER_TPE);
+  await AsyncStorage.removeItem(ROLE);
   await AsyncStorage.removeItem(TOKEN_COOKIE);
 }

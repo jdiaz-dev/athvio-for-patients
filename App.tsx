@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
-import PatientPlanLists from './src/modules/patient-plans/PatientPlanList';
+import PatientPlanList from './src/modules/patient-plans/adapters/in/components/PatientPlanList';
 import PatientProfile from './src/modules/patient/PatientProfile';
 import { ApolloProvider } from '@apollo/client';
 import SignIn from './src/modules/authentication/adapters/in/SignIn';
@@ -51,7 +51,7 @@ export default function App() {
                   name="ClientPlans"
                   component={() => (
                     <PrivateRoute>
-                      <PatientPlanLists />
+                      <PatientPlanList />
                     </PrivateRoute>
                   )}
                   options={{ title: 'Plans' }}

@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomNavigation } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import PatientProfile from './patient/PatientProfile';
-import PatientPlanList from './patient-plans/PatientPlanList';
+import PatientPlanList from './patient-plans/adapters/in/components/PatientPlanList';
 import ChatScreen from 'src/modules/chat/adapters/in/components/Chat';
 import SignOut from 'src/modules/authentication/adapters/in/SignOut';
 

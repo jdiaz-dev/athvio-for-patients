@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import ChatReducer from 'src/modules/chat/adapters/in/slicers/ChatSlice';
+import PatienPlansReducer from 'src/modules/patient-plans/adapters/in/slicers/PatientPlanSlice';
 
 // const {applyMiddleware, combineReducers, createStore} = require('redux');
 import thunk from 'redux-thunk';
@@ -14,8 +15,8 @@ import thunk from 'redux-thunk';
 // const store = createStore(reducer);
 export default configureStore({
   reducer: {
-
     chat: ChatReducer,
+    patientPlans: PatienPlansReducer,
   },
   devTools: true,
   // enhancers

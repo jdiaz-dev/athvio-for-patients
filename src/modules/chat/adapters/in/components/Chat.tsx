@@ -19,7 +19,6 @@ const ChatScreen = () => {
   const { patient, assignedProfessional } = useContext(AuthContext);
   const dispatch = useDispatch();
 
-  const [messages, setMessages] = useState<Message[]>([]);
   const { getChat, commentAddedSubscription, saveChatComment } = useChat();
   const { data: chatState } = useSelector((state: ReduxStates) => state.chat.chat);
 
@@ -60,7 +59,7 @@ const ChatScreen = () => {
   const renderItem: ListRenderItem<CommentBody> = ({ item }) => (
     <List.Item
       title={item.content}
-      titleStyle={item.commenter === Commenter.PATIENT ? styles.patientMessage : styles.otherMessage}
+      titleStyle={item.commenter === Commenter.PATIENT ? styles.patientMessage : styles.professionalMessage}
     />
   );
 
@@ -116,7 +115,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     alignSelf: 'flex-end',
   },
-  otherMessage: {
+  professionalMessage: {
     backgroundColor: '#ECECEC',
     padding: 10,
     borderRadius: 10,
