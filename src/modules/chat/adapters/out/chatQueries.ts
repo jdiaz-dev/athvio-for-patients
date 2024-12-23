@@ -10,6 +10,7 @@ export const GET_CHAT_QUERY = gql`
         _id
         commenter
         content
+        createdAt
       }
     }
   }

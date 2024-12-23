@@ -13,6 +13,7 @@ export function usePatientPlans() {
   const dispatch = useDispatch();
 
   const getPatientPlans = async (body: GetRecordsPatientPlansBody): Promise<void> => {
+    console.log('-------body', body);
     try {
       const response = await apolloClient.mutate<GetPatientPlansResponse, GetPatientPlansRequest>({
         mutation: PATIENT_PLAN_FOR_MOBILE,
@@ -22,6 +23,7 @@ export function usePatientPlans() {
       });
       if (response.data) dispatch(PatientPlansSlice.initializePatientPlans(response.data.getPatientPlansForMobile));
     } catch (error) {
+      console.log('-------error', JSON.stringify(error, null, 4));
       dispatch(PatientPlansSlice.initializePatientPlansError((error as ApolloError).graphQLErrors[0].message));
     }
   };
