@@ -6,7 +6,7 @@ export type ReduxStates = {
   patientPlans: PatientPlanInitialState;
 };
 
-export type RootStackParamList = {
+export type ScreenParamList = {
   SignIn: undefined;
   Navigation: { tabTitle: string };
 };

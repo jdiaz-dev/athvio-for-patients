@@ -3,7 +3,7 @@ import { createSessionCookies, getToken, getPatientId } from 'src/modules/authen
 import { AuthContext } from '../context/AuthContext';
 import { CredentialsSignIn, JwtDto } from 'src/modules/authentication/adapters/out/authentication';
 import { useAuthentication } from 'src/modules/authentication/adapters/out/authenticationActions';
-import { usePatient } from 'src/modules/patient/in/patientActions';
+import { usePatient } from 'src/modules/Account/in/patientActions';
 
 function AuthProvider({ children }: { children: ReactNode }) {
   const { signIn } = useAuthentication();

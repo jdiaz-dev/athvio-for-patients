@@ -6,7 +6,6 @@ import { PatientPlanBody } from 'src/modules/patient-plans/adapters/out/patient-
 import { usePatientPlans } from 'src/modules/patient-plans/adapters/out/PatientPlanActions';
 import { ReduxStates } from 'src/shared/types/types';
 import { StyleSheet } from 'react-native';
-import { IngredientType } from 'src/modules/patient-plans/adapters/out/enum';
 import PatientPlanItem from 'src/modules/patient-plans/adapters/in/components/PatientPlanItem';
 
 //this is a function not a component

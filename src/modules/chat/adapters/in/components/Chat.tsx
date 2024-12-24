@@ -63,6 +63,7 @@ const ChatScreen = () => {
       </>
     );
   };
+
   return (
     <View style={styles.container}>
       <FlatList

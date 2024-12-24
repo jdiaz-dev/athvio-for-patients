@@ -52,9 +52,8 @@ export function useChat() {
   };
 
   const commentAddedSubscription = async (body: CommendAddedSubscriptionInput): Promise<void> => {
-    console.log('-----------body subs', body);
     try {
-      const response = apolloClient
+      apolloClient
         .subscribe<CommentAddedResponse, CommendAddedSubscriptionRequest>({
           query: PROFESSIONAL_MESSAGED_SUBSCRIPTION,
           variables: {
@@ -62,16 +61,9 @@ export function useChat() {
           },
         })
         .subscribe(({ data, errors, extensions }) => {
-          console.log('-------data', data);
           if (data) dispatch(ChatSlice.newCommentReceived(data.professionalMessaged.comments[0]));
         });
-
-      if (response) {
-        console.log('-------response', response);
-        // dispatch(PatientPlanSlice.acceptNewPatientPlan(response.?.updatePlanMeal as PatientPlanBody));
-      }
     } catch (error) {
-      console.log('-------------error graphQLErrors', (error as ApolloError).graphQLErrors);
       throw error;
     }
   };

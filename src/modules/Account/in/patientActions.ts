@@ -1,7 +1,7 @@
 import { FetchResult } from '@apollo/client';
 import { apolloClient } from 'src/core/graphql/ApolloClient';
-import { GetPatientInput, GetPatientRequest, GetPatientResponse } from 'src/modules/patient/out/patient';
-import { GET_PATIENT } from 'src/modules/patient/in/patientQueries';
+import { GetPatientInput, GetPatientRequest, GetPatientResponse } from 'src/modules/Account/out/patient';
+import { GET_PATIENT } from 'src/modules/Account/in/patientQueries';
 
 export function usePatient() {
   const getPatient = async (credentials: GetPatientInput): Promise<FetchResult<GetPatientResponse>> => {

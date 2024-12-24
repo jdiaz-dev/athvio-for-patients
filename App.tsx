@@ -11,7 +11,7 @@ import PublicRoute from 'src/core/router/PublicRoute';
 import PrivateRoute from 'src/core/router/PrivateRoute';
 import { Provider } from 'react-redux';
 import store from 'src/core/redux/configureStore';
-import { RootStackParamList } from 'src/shared/types/types';
+import { ScreenParamList } from 'src/shared/types/types';
 
 const theme = {
   ...DefaultTheme,
@@ -22,7 +22,7 @@ const theme = {
   },
 };
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<ScreenParamList>();
 
 export default function App() {
   return (
@@ -53,6 +53,9 @@ export default function App() {
                     headerTitleStyle: {
                       ...styles.headerTitleStyle,
                     },
+                    headerStyle: {
+                      ...styles.headerStyle,
+                    },
                   })}
                   component={(props: any) => (
                     <PrivateRoute>
@@ -74,5 +77,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: 'blue',
+  },
+  headerStyle: {
+    backgroundColor: 'white',
+    height: 35,
   },
 });
