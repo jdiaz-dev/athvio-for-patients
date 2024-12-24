@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { FlatList, ListRenderItem, View } from 'react-native';
-import { Card, List, Surface, Text } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { AuthContext } from 'src/modules/authentication/adapters/in/context/AuthContext';
 import { PatientPlanBody } from 'src/modules/patient-plans/adapters/out/patient-plan';
@@ -8,58 +7,9 @@ import { usePatientPlans } from 'src/modules/patient-plans/adapters/out/PatientP
 import { ReduxStates } from 'src/shared/types/types';
 import { StyleSheet } from 'react-native';
 import { IngredientType } from 'src/modules/patient-plans/adapters/out/enum';
+import PatientPlanItem from 'src/modules/patient-plans/adapters/in/components/PatientPlanItem';
 
-function PatientPlanItem({ patientPlan }: { patientPlan: PatientPlanBody }) {
-  const [expanded, setExpanded] = useState(false);
-  const handlePress = () => {
-    setExpanded(!expanded);
-  };
-  return (
-    <>
-      <List.Accordion
-        id={patientPlan._id}
-        title={`${new Date(patientPlan.assignedDate).toDateString()}`}
-        style={{ backgroundColor: 'green', width: 300 }}
-        titleStyle={{ width: 300 }}
-        expanded={expanded}
-        onPress={handlePress}
-      >
-        {expanded &&
-          patientPlan.meals.map((meal, index1) => {
-            return (
-              <>
-                <List.Item title={meal.mealTag} key={index1} style={{}} />
-                {meal.ingredientDetails.map((ingredientDetail, index2) => {
-                  const ingredientAmount =
-                    ingredientDetail.ingredientType === IngredientType.UNIQUE_INGREDIENT
-                      ? ingredientDetail.ingredient?.amount
-                      : ingredientDetail.customIngredient?.amount;
-                  const ingredientName =
-                    ingredientDetail.ingredientType === IngredientType.UNIQUE_INGREDIENT
-                      ? ingredientDetail.ingredient?.name
-                      : ingredientDetail.customIngredient?.name;
-                  const ingredientLabel =
-                    ingredientDetail.ingredientType === IngredientType.UNIQUE_INGREDIENT
-                      ? ingredientDetail.ingredient?.label
-                      : ingredientDetail.customIngredient?.label;
-                  return <Text key={index2}>{`${ingredientAmount} ${ingredientLabel} ${ingredientName}`}</Text>;
-                })}
-                <Text>{meal.cookingInstructions}</Text>
-              </>
-            );
-          })}
-      </List.Accordion>
-      {!expanded &&
-        patientPlan.meals.map((meal) => {
-          return (
-            <>
-              <List.Item title={meal.mealTag} />
-            </>
-          );
-        })}
-    </>
-  );
-}
+//this is a function not a component
 const renderItem: ListRenderItem<PatientPlanBody> = ({ item }) => {
   return <PatientPlanItem patientPlan={item} />;
 };
