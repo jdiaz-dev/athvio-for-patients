@@ -1,10 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
-import PatientPlanList from './src/modules/patient-plans/adapters/in/components/PatientPlanList';
-import PatientProfile from './src/modules/patient/PatientProfile';
 import { ApolloProvider } from '@apollo/client';
 import SignIn from './src/modules/authentication/adapters/in/SignIn';
 import { apolloClient } from './src/core/graphql/ApolloClient';
@@ -14,6 +11,7 @@ import PublicRoute from 'src/core/router/PublicRoute';
 import PrivateRoute from 'src/core/router/PrivateRoute';
 import { Provider } from 'react-redux';
 import store from 'src/core/redux/configureStore';
+import { RootStackParamList } from 'src/shared/types/types';
 
 const theme = {
   ...DefaultTheme,
@@ -24,7 +22,7 @@ const theme = {
   },
 };
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export default function App() {
   return (
@@ -45,24 +43,20 @@ export default function App() {
                       <SignIn />
                     </PublicRoute>
                   )}
-                  // options={{ title: "Plans" }}
                 />
-                <Stack.Screen
-                  name="ClientPlans"
-                  component={() => (
-                    <PrivateRoute>
-                      <PatientPlanList />
-                    </PrivateRoute>
-                  )}
-                  options={{ title: 'Plans' }}
-                  // options={{title: 'Welcome'}}
-                />
-                <Stack.Screen name="PatientProfile" component={PatientProfile} />
                 <Stack.Screen
                   name="Navigation"
-                  component={() => (
+                  options={({ route }) => ({
+                    headerShown: true,
+                    headerLeft: () => null,
+                    headerTitle: route.params.tabTitle,
+                    headerTitleStyle: {
+                      ...styles.headerTitleStyle,
+                    },
+                  })}
+                  component={(props: any) => (
                     <PrivateRoute>
-                      <Navigation />
+                      <Navigation {...props} />
                     </PrivateRoute>
                   )}
                 />
@@ -76,10 +70,9 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  headerTitleStyle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'blue',
   },
 });

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 
 import { CommonActions } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -8,21 +8,26 @@ import PatientProfile from './patient/PatientProfile';
 import PatientPlanList from './patient-plans/adapters/in/components/PatientPlanList';
 import ChatScreen from 'src/modules/chat/adapters/in/components/Chat';
 import SignOut from 'src/modules/authentication/adapters/in/SignOut';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from 'src/shared/types/types';
 
 const Tab = createBottomTabNavigator();
 
-function Navigation() {
+type NavigationProps = {
+  navigation: NativeStackNavigationProp<RootStackParamList, 'Navigation'>;
+};
+function Navigation({ navigation }: NavigationProps) {
   return (
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
       }}
-      tabBar={({ navigation, state, descriptors, insets }) => (
+      tabBar={({ navigation: tabNav, state, descriptors, insets }) => (
         <BottomNavigation.Bar
           navigationState={state}
           safeAreaInsets={insets}
           onTabPress={({ route, preventDefault }) => {
-            const event = navigation.emit({
+            const event = tabNav.emit({
               type: 'tabPress',
               target: route.key,
               canPreventDefault: true,
@@ -31,26 +36,27 @@ function Navigation() {
             if (event.defaultPrevented) {
               preventDefault();
             } else {
-              navigation.dispatch({
+              tabNav.dispatch({
                 ...CommonActions.navigate(route.name, route.params),
                 target: state.key,
               });
             }
+            // Update active tab title
+            const { options } = descriptors[route.key];
+            const label = options.tabBarLabel || route.name;
+            navigation.setParams({ tabTitle: label as string }); // Update parent headerTitle
           }}
           renderIcon={({ route, focused, color }) => {
             const { options } = descriptors[route.key];
             if (options.tabBarIcon) {
               return options.tabBarIcon({ focused, color, size: 24 });
             }
-
             return null;
           }}
           getLabelText={({ route }) => {
             const { options } = descriptors[route.key];
-            const label =
-              options.tabBarLabel !== undefined ? options.tabBarLabel : options.title !== undefined ? options.title : route.title;
-
-            return label;
+            const label = options.tabBarLabel || route.name;
+            return label as string;
           }}
         />
       )}
@@ -60,9 +66,7 @@ function Navigation() {
         component={PatientPlanList}
         options={{
           tabBarLabel: 'Plans',
-          tabBarIcon: ({ color, size }) => {
-            return <Icon name="home" size={size} color={color} />;
-          },
+          tabBarIcon: ({ color, size }) => <Icon name="home" size={size} color={color} />,
         }}
       />
       <Tab.Screen
@@ -70,9 +74,7 @@ function Navigation() {
         component={ChatScreen}
         options={{
           tabBarLabel: 'Chat',
-          tabBarIcon: ({ color, size }) => {
-            return <Icon name="cog" size={size} color={color} />;
-          },
+          tabBarIcon: ({ color, size }) => <Icon name="chat" size={size} color={color} />,
         }}
       />
       <Tab.Screen
@@ -80,19 +82,15 @@ function Navigation() {
         component={PatientProfile}
         options={{
           tabBarLabel: 'Patient profile',
-          tabBarIcon: ({ color, size }) => {
-            return <Icon name="cog" size={size} color={color} />;
-          },
+          tabBarIcon: ({ color, size }) => <Icon name="account" size={size} color={color} />,
         }}
       />
       <Tab.Screen
-        name="..."
+        name="SignOut"
         component={SignOut}
         options={{
-          tabBarLabel: '...',
-          tabBarIcon: ({ color, size }) => {
-            return <Icon name="" size={size} color={color} />;
-          },
+          tabBarLabel: 'Sign Out',
+          tabBarIcon: ({ color, size }) => <Icon name="exit-to-app" size={size} color={color} />,
         }}
       />
     </Tab.Navigator>

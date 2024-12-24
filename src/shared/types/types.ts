@@ -5,3 +5,8 @@ export type ReduxStates = {
   chat: ChatInitialState;
   patientPlans: PatientPlanInitialState;
 };
+
+export type RootStackParamList = {
+  SignIn: undefined;
+  Navigation: { tabTitle: string };
+};
