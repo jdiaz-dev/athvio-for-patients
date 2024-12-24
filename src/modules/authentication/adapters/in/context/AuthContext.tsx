@@ -4,7 +4,8 @@ import { CredentialsSignIn } from 'src/modules/authentication/adapters/out/autho
 export type AuthContextData = {
   isAuthenticated: boolean;
   patient: string; //TODO: change name
-  assignedProfessional:string;
+  assignedProfessional: string;
+  fullnameAndSurname: string;
   signInHandler: (credentials: CredentialsSignIn) => Promise<any>;
   signOut: () => void;
 };

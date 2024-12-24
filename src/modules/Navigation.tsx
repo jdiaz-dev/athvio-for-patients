@@ -7,7 +7,6 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Account from './Account/Account';
 import PatientPlanList from './patient-plans/adapters/in/components/PatientPlanList';
 import ChatScreen from 'src/modules/chat/adapters/in/components/Chat';
-import SignOut from 'src/modules/authentication/adapters/in/SignOut';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ScreenParamList } from 'src/shared/types/types';
 
@@ -83,14 +82,6 @@ function Navigation({ navigation }: NavigationProps) {
         options={{
           tabBarLabel: 'Account',
           tabBarIcon: ({ color, size }) => <Icon name="account" size={size} color={color} />,
-        }}
-      />
-      <Tab.Screen
-        name="SignOut"
-        component={SignOut}
-        options={{
-          tabBarLabel: 'Sign Out',
-          tabBarIcon: ({ color, size }) => <Icon name="exit-to-app" size={size} color={color} />,
         }}
       />
     </Tab.Navigator>
