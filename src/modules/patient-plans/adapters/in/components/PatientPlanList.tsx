@@ -16,17 +16,20 @@ function PatientPlanList() {
   const { patient } = useContext(AuthContext);
   const { getPatientPlans } = usePatientPlans();
   const { data: patientPlansState } = useSelector((state: ReduxStates) => state.patientPlans.patientPlans);
-  const input = {
-    patient,
-    offset: 0,
-    limit: 30,
-  };
+
   useEffect(() => {
     const getPatientPlansHelper = async () => {
-      await getPatientPlans(input);
+      if (patient !== null) {
+        const input = {
+          patient,
+          offset: 0,
+          limit: 30,
+        };
+        await getPatientPlans(input);
+      }
     };
     getPatientPlansHelper();
-  }, []);
+  }, [patient]);
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>

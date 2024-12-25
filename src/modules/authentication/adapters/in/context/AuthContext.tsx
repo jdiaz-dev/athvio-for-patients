@@ -3,11 +3,11 @@ import { CredentialsSignIn } from 'src/modules/authentication/adapters/out/autho
 
 export type AuthContextData = {
   isAuthenticated: boolean;
-  patient: string; //TODO: change name
+  patient: string | null; //TODO: change name
   assignedProfessional: string;
   fullnameAndSurname: string;
   signInHandler: (credentials: CredentialsSignIn) => Promise<any>;
-  signOut: () => void;
+  signOutHandler: () => void;
 };
 
 export const AuthContext = createContext<AuthContextData>({} as AuthContextData);

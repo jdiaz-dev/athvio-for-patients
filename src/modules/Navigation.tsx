@@ -4,11 +4,11 @@ import { CommonActions } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { BottomNavigation } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Account from './Account/Account';
-import PatientPlanList from './patient-plans/adapters/in/components/PatientPlanList';
 import ChatScreen from 'src/modules/chat/adapters/in/components/Chat';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ScreenParamList } from 'src/shared/types/types';
+import Account from 'src/modules/Account/in/Account';
+import PatientPlanList from 'src/modules/patient-plans/adapters/in/components/PatientPlanList';
 
 const Tab = createBottomTabNavigator();
 

@@ -18,20 +18,22 @@ const ChatScreen = () => {
 
   const [currentMessage, setCurrentMessage] = useState<string>('');
 
-  const data = {
-    professional: assignedProfessional,
-    patient,
-  };
   useEffect(() => {
-    const getChatHelper = async () => {
+    const chatManagerHelper = async () => {
+      const data = {
+        professional: assignedProfessional,
+        patient: patient as string,
+      };
       await getChat(data);
+      commentAddedSubscription(data);
     };
-    getChatHelper();
-    commentAddedSubscription(data);
-  }, []);
+    if (patient !== null) {
+      chatManagerHelper();
+    }
+  }, [patient]);
 
   const sendMessageHandler = async () => {
-    if (currentMessage.trim()) {
+    if (patient !== null && currentMessage.trim()) {
       setCurrentMessage('');
       const comment = {
         _id: '',

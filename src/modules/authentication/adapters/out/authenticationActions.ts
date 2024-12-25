@@ -5,16 +5,21 @@ import { SIGN_IN } from './authenticationQueries';
 
 export function useAuthentication() {
   const signIn = async (credentials: CredentialsSignIn): Promise<FetchResult<SignInResponse>> => {
-    const res = await apolloClient.mutate<SignInResponse, SignInRequest>({
-      mutation: SIGN_IN,
-      variables: {
-        input: {
-          ...credentials,
+    try {
+      const res = await apolloClient.mutate<SignInResponse, SignInRequest>({
+        mutation: SIGN_IN,
+        variables: {
+          input: {
+            ...credentials,
+          },
         },
-      },
-    });
-
-    return res;
+      });
+      console.log('------res', res)
+      return res;
+    } catch (error) {
+      console.log('---------error', error);
+      throw error;
+    }
   };
 
   return { signIn };

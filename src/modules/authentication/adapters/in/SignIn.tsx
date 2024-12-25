@@ -1,9 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
-import { Snackbar, TextInput, Button } from 'react-native-paper';
-import { useMutation } from '@apollo/client';
-import { SignInMutation, SignInRequest } from 'src/modules/authentication/adapters/out/authorization';
-import { SIGN_IN } from 'src/modules/authentication/adapters/out/authenticationQueries';
+import { TextInput, Button } from 'react-native-paper';
+
 import { AuthContext } from 'src/modules/authentication/adapters/in/context/AuthContext';
 
 function SignIn() {

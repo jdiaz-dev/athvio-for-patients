@@ -1,52 +1,66 @@
 import React, { ReactNode, useEffect, useState } from 'react';
-import { createSessionCookies, getToken, getPatientId } from 'src/modules/authentication/adapters/out/storage';
-import { AuthContext } from '../context/AuthContext';
+import {
+  createSessionCookies,
+  getToken,
+  getPatientId,
+  removeSessionCokkies,
+} from 'src/modules/authentication/adapters/out/storage';
 import { CredentialsSignIn, JwtDto } from 'src/modules/authentication/adapters/out/authentication';
 import { useAuthentication } from 'src/modules/authentication/adapters/out/authenticationActions';
-import { usePatient } from 'src/modules/Account/in/patientActions';
+import { AuthContext } from 'src/modules/authentication/adapters/in/context/AuthContext';
+import { usePatient } from 'src/modules/Account/out/patientActions';
 
 function AuthProvider({ children }: { children: ReactNode }) {
   const { signIn } = useAuthentication();
-
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [patient, setPatient] = useState('');
-  const [assignedProfessional, setAssignedProfessional] = useState('');
-  const [fullnameAndSurname, setFullnameAndSurname] = useState('');
   const { getPatient } = usePatient();
 
-  useEffect(() => {
-    const getPatientHelper = async () => {
-      const { data } = await getPatient({ patient });
-      if (data) {
-        setAssignedProfessional(data.getPatientForMobile.professional);
-        setFullnameAndSurname(data.getPatientForMobile.user.firstname + ' ' + data.getPatientForMobile.user.lastname);
-      }
-    };
-    if (isAuthenticated) getPatientHelper();
-  }, [isAuthenticated]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [patient, setPatient] = useState<string | null>(null);
+  const [assignedProfessional, setAssignedProfessional] = useState('');
+  const [fullnameAndSurname, setFullnameAndSurname] = useState('');
 
   useEffect(() => {
     const verfifyAuthentication = async () => {
       const isAuth = await getToken();
-
       const patient = await getPatientId();
       setPatient(patient);
-      setIsAuthenticated(isAuth == null ? false : true);
+      setIsAuthenticated(isAuth != null);
     };
     verfifyAuthentication();
-  }, []);
+  }, [isAuthenticated]); // Runs only once on mount
+
+  useEffect(() => {
+    if (!isAuthenticated) return;
+
+    const getPatientHelper = async () => {
+      if (patient !== null) {
+        const { data } = await getPatient({ patient });
+        if (data) {
+          setAssignedProfessional(data.getPatientForMobile.professional);
+          setFullnameAndSurname(`${data.getPatientForMobile.user.firstname} ${data.getPatientForMobile.user.lastname}`);
+        }
+      }
+    };
+
+    getPatientHelper();
+  }, [isAuthenticated]); // Add patient to dependencies
 
   const saveJwt = async (data: JwtDto) => {
     await createSessionCookies({ ...data });
     setPatient(data._id);
     setIsAuthenticated(true);
   };
+
   const signInHandler = async (credentials: CredentialsSignIn) => {
     const { data } = await signIn(credentials);
     if (data) await saveJwt(data.signIn);
   };
 
-  const signOut = () => {};
+  const signOutHandler = () => {
+    removeSessionCokkies();
+    setIsAuthenticated(false);
+    setPatient(null);
+  };
 
   return (
     <AuthContext.Provider
@@ -56,7 +70,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
         assignedProfessional,
         fullnameAndSurname,
         signInHandler,
-        signOut,
+        signOutHandler,
       }}
     >
       {children}

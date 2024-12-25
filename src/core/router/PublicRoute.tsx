@@ -7,7 +7,9 @@ function PublicRoute({ children }: { children: ReactNode }) {
   const navigation = useNavigation<NavigationScreenNavigationProp>();
   const { isAuthenticated } = useContext(AuthContext);
 
+  console.log('--------isAuthenticated 1', isAuthenticated);
   if (isAuthenticated) {
+    console.log('--------isAuthenticated 2', isAuthenticated);
     navigation.navigate('Navigation', { tabTitle: 'Plans' });
   }
   return <>{children}</>;

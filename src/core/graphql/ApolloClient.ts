@@ -7,8 +7,8 @@ import { getMainDefinition } from '@apollo/client/utilities';
 import { getToken } from 'src/modules/authentication/adapters/out/storage';
 
 const httpLink = new HttpLink({
-  // uri: 'http://192.168.43.231:57343/graphql',
-  uri: 'http://localhost:57343/graphql',
+  uri: 'http://192.168.43.231:57343/graphql',
+  // uri: 'http://localhost:57343/graphql',
 });
 
 const wsLink = new GraphQLWsLink(
