@@ -8,8 +8,8 @@ import { ReduxStates } from 'src/shared/types/types';
 import PatientPlanItem from 'src/modules/patient-plans/adapters/in/components/PatientPlanItem';
 
 //this is a function not a component
-const renderItem: ListRenderItem<PatientPlanBody> = ({ item }) => {
-  return <PatientPlanItem patientPlan={item} />;
+const renderItem: ListRenderItem<PatientPlanBody> = ({ item, index }) => {
+  return <PatientPlanItem patientPlan={item} index={index} />;
 };
 function PatientPlanList() {
   const { patient } = useContext(AuthContext);

@@ -9,7 +9,6 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ScreenParamList } from 'src/shared/types/types';
 import Account from 'src/modules/Account/in/Account';
 import PatientPlanList from 'src/modules/patient-plans/adapters/in/components/PatientPlanList';
-import ActivityList from 'src/modules/Lab';
 
 const Tab = createBottomTabNavigator();
 
@@ -82,14 +81,6 @@ function Navigation({ navigation }: NavigationProps) {
         component={Account}
         options={{
           tabBarLabel: 'Account',
-          tabBarIcon: ({ color, size }) => <Icon name="account" size={size} color={color} />,
-        }}
-      />
-      <Tab.Screen
-        name="ActivityList"
-        component={ActivityList}
-        options={{
-          tabBarLabel: 'ActivityList',
           tabBarIcon: ({ color, size }) => <Icon name="account" size={size} color={color} />,
         }}
       />

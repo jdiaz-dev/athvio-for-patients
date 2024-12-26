@@ -23,6 +23,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
     const verfifyAuthentication = async () => {
       const isAuth = await getToken();
       const patient = await getPatientId();
+      console.log('------patient', patient);
       setPatient(patient);
       setIsAuthenticated(isAuth != null);
     };
@@ -47,12 +48,13 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
   const saveJwt = async (data: JwtDto) => {
     await createSessionCookies({ ...data });
-    setPatient(data._id);
     setIsAuthenticated(true);
+    setPatient(data._id);
   };
 
   const signInHandler = async (credentials: CredentialsSignIn) => {
     const { data } = await signIn(credentials);
+    console.log('-------data', data);
     if (data) await saveJwt(data.signIn);
   };
 

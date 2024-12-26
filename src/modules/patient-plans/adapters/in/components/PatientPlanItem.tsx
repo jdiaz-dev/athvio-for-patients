@@ -1,22 +1,27 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { List, Surface } from 'react-native-paper';
+import { useSelector } from 'react-redux';
 import { IngredientType } from 'src/modules/patient-plans/adapters/out/enum';
 import { PatientPlanBody } from 'src/modules/patient-plans/adapters/out/patient-plan';
+import { ReduxStates } from 'src/shared/types/types';
 
-function PatientPlanItem({ patientPlan }: { patientPlan: PatientPlanBody }) {
+function PatientPlanItem({ patientPlan, index }: { patientPlan: PatientPlanBody; index: number }) {
   const [expanded, setExpanded] = useState(false);
+  const { data: patientPlansState } = useSelector((state: ReduxStates) => state.patientPlans.patientPlans);
   const handlePress = () => {
     setExpanded(!expanded);
   };
+  const isLastSurface = index === patientPlansState.length - 1;
+
   return (
     <>
-      <Surface style={styles.card}>
+      <Surface style={{ ...styles.card, ...(isLastSurface && styles.lastSurface) }} elevation={5}>
         <List.Accordion
           id={patientPlan._id}
           title={`${new Date(patientPlan.assignedDate).toDateString()}`}
           style={{ ...styles.accordion }}
-          titleStyle={{ width: 300, color: 'white' }}
+          titleStyle={{ width: 300, fontWeight: 'bold', color: '#84e0d2' }}
           expanded={expanded}
           onPress={handlePress}
           right={(props) => <List.Icon {...props} icon={expanded ? 'chevron-up' : 'chevron-down'} color="white" />}
@@ -25,7 +30,7 @@ function PatientPlanItem({ patientPlan }: { patientPlan: PatientPlanBody }) {
             patientPlan.meals.map((meal, index1) => {
               return (
                 <>
-                  <List.Item title={meal.mealTag} key={index1} style={{ ...styles.listItem }} />
+                  <List.Item title={meal.mealTag} key={index1} titleStyle={{ color: 'white' }} />
                   {meal.ingredientDetails.map((ingredientDetail, index2) => {
                     const ingredientAmount =
                       ingredientDetail.ingredientType === IngredientType.UNIQUE_INGREDIENT
@@ -51,16 +56,12 @@ function PatientPlanItem({ patientPlan }: { patientPlan: PatientPlanBody }) {
             })}
         </List.Accordion>
         {!expanded &&
-          patientPlan.meals.map((meal, index) => {
-            const isLastItem = index === patientPlan.meals.length - 1;
+          patientPlan.meals.map((meal, indexMeal) => {
+            const isLastItem = indexMeal === patientPlan.meals.length - 1;
 
             return (
               <>
-                <List.Item
-                  titleStyle={{ color: 'white' }}
-                  style={{ ...styles.listItem, ...(isLastItem && styles.lastItem) }}
-                  title={meal.mealTag}
-                />
+                <List.Item titleStyle={{ color: 'white' }} style={{ ...(isLastItem && styles.lastItem) }} title={meal.mealTag} />
               </>
             );
           })}
@@ -81,21 +82,20 @@ const styles = StyleSheet.create({
   accordion: {
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
-    backgroundColor: '#1E1E1E',
+    backgroundColor: '#323232',
   },
   text: {
     margin: 'auto',
     paddingLeft: 25,
     width: 300,
-    backgroundColor: 'brown',
+    color: 'white',
   },
-  listItem: {
-    // backgroundColor: 'green',
-    /* width: 300,
-    margin: 'auto', */
-  },
+
   lastItem: {
     borderBottomLeftRadius: 6,
     borderBottomRightRadius: 6,
+  },
+  lastSurface: {
+    marginBottom: 36,
   },
 });

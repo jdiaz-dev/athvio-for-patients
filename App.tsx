@@ -34,6 +34,10 @@ export default function App() {
               <Stack.Navigator initialRouteName="SignIn">
                 <Stack.Screen
                   name="SignIn"
+                  options={() =>({
+                    headerShown: true,
+                    headerLeft: () => null,
+                  })}
                   component={() => (
                     <PublicRoute>
                       <SignIn />
@@ -45,6 +49,7 @@ export default function App() {
                   options={({ route }) => ({
                     headerShown: true,
                     headerLeft: () => null,
+                    headerBackVisible: false,
                     headerTitle: route.params.tabTitle,
                     headerTitleStyle: {
                       ...styles.headerTitleStyle,
@@ -72,10 +77,10 @@ const styles = StyleSheet.create({
   headerTitleStyle: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: 'blue',
+    color: '#e8f2f0',
   },
   headerStyle: {
-    backgroundColor: 'white',
+    backgroundColor: '#2c9687',
     height: 35,
   },
 });
