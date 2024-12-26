@@ -13,7 +13,8 @@ const httpLink = new HttpLink({
 
 const wsLink = new GraphQLWsLink(
   createClient({
-    url: 'ws://localhost:57343/graphql',
+    url: 'http://192.168.43.231:57343/graphql',
+    // url: 'ws://localhost:57343/graphql',
 
     connectionParams: async () => {
       return {
@@ -44,7 +45,7 @@ const splitLink = split(
 );
 
 const errorLink = onError(({ graphQLErrors, networkError }) => {
-  console.log('-------graphQLErrors', graphQLErrors);
+  console.log('-------graphQLErrors', JSON.stringify(graphQLErrors, null, 4));
   console.log('-------networkError', networkError);
   if (graphQLErrors)
     graphQLErrors.forEach(({ message, locations, path }) =>

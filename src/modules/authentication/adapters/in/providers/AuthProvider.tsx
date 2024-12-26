@@ -23,7 +23,6 @@ function AuthProvider({ children }: { children: ReactNode }) {
     const verfifyAuthentication = async () => {
       const isAuth = await getToken();
       const patient = await getPatientId();
-      console.log('------patient', patient);
       setPatient(patient);
       setIsAuthenticated(isAuth != null);
     };

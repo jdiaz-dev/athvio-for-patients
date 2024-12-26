@@ -34,9 +34,15 @@ export default function App() {
               <Stack.Navigator initialRouteName="SignIn">
                 <Stack.Screen
                   name="SignIn"
-                  options={() =>({
+                  options={() => ({
                     headerShown: true,
                     headerLeft: () => null,
+                    headerTitleStyle: {
+                      ...styles.headerTitleStyle,
+                    },
+                    headerStyle: {
+                      ...styles.headerStyle,
+                    },
                   })}
                   component={() => (
                     <PublicRoute>

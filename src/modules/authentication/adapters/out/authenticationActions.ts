@@ -14,7 +14,6 @@ export function useAuthentication() {
           },
         },
       });
-      console.log('------res', res)
       return res;
     } catch (error) {
       console.log('---------error', error);
