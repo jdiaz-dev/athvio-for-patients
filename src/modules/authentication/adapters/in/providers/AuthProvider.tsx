@@ -30,8 +30,6 @@ function AuthProvider({ children }: { children: ReactNode }) {
   }, [isAuthenticated]); // Runs only once on mount
 
   useEffect(() => {
-    if (!isAuthenticated) return;
-
     const getPatientHelper = async () => {
       if (patient !== null) {
         const { data } = await getPatient({ patient });
@@ -42,18 +40,17 @@ function AuthProvider({ children }: { children: ReactNode }) {
       }
     };
 
-    getPatientHelper();
-  }, [isAuthenticated]); // Add patient to dependencies
+    if (isAuthenticated) getPatientHelper();
+  }, [isAuthenticated]);
 
   const saveJwt = async (data: JwtDto) => {
     await createSessionCookies({ ...data });
-    setIsAuthenticated(true);
     setPatient(data._id);
+    setIsAuthenticated(true);
   };
 
   const signInHandler = async (credentials: CredentialsSignIn) => {
     const { data } = await signIn(credentials);
-    console.log('-------data', data);
     if (data) await saveJwt(data.signIn);
   };
 

@@ -4,13 +4,11 @@ import { GetPatientInput, GetPatientRequest, GetPatientResponse } from 'src/modu
 import { GET_PATIENT } from 'src/modules/Account/out/patientQueries';
 
 export function usePatient() {
-  const getPatient = async (credentials: GetPatientInput): Promise<FetchResult<GetPatientResponse>> => {
+  const getPatient = async (input: GetPatientInput): Promise<FetchResult<GetPatientResponse>> => {
     const res = await apolloClient.query<GetPatientResponse, GetPatientRequest>({
       query: GET_PATIENT,
       variables: {
-        input: {
-          ...credentials,
-        },
+        input,
       },
     });
 

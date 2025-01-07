@@ -6,16 +6,16 @@ import { onError } from '@apollo/client/link/error';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { getToken } from 'src/modules/authentication/adapters/out/storage';
 
+const url = 'http://192.168.43.231:57343/graphql';
+// const url = 'http://localhost:57343/graphql'
+
 const httpLink = new HttpLink({
-  uri: 'http://192.168.43.231:57343/graphql',
-  // uri: 'http://localhost:57343/graphql',
+  uri: url,
 });
 
 const wsLink = new GraphQLWsLink(
   createClient({
-    url: 'http://192.168.43.231:57343/graphql',
-    // url: 'ws://localhost:57343/graphql',
-
+    url,
     connectionParams: async () => {
       return {
         authorization: await getToken(),
