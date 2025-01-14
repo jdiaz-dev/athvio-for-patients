@@ -1,4 +1,4 @@
-import { IngredientType } from "src/modules/patient-plans/adapters/out/enum";
+import { IngredientType, PatientPlanTypeDates } from 'src/modules/patient-plans/adapters/out/enum';
 
 export interface Macros {
   weightInGrams: number;
@@ -78,6 +78,8 @@ export type PatientPlanBody = Plan & {
 
 export type GetRecordsPatientPlansBody = GetRecordsBody & {
   patient: string;
+  currentDate: Date;
+  patientPlanTypeDate: PatientPlanTypeDates;
 };
 
 export type GetPatientPlansRequest = {
