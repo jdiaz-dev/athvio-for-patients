@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "athvio-for-clients",
-    "slug": "athvio-for-clients",
+    "name": "athvio-for-patients",
+    "slug": "athvio-for-patients",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
