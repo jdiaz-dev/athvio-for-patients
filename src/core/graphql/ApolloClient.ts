@@ -6,8 +6,7 @@ import { onError } from '@apollo/client/link/error';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { getToken } from 'src/modules/authentication/adapters/out/storage';
 
-const url = 'http://192.168.43.231:57343/graphql';
-// const url = 'http://localhost:57343/graphql'
+const url = process.env.EXPO_PUBLIC_SERVER_GRAPHQL_APP_URL as string;
 
 const httpLink = new HttpLink({
   uri: url,

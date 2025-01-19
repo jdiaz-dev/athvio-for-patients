@@ -6,7 +6,9 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web",
+    "web:local": "[ -f .env.local.bak ] && mv .env.local.bak .env.local || true && NODE_ENV=local expo start --web",
+    "web:dev": "[ -f .env.local ] && mv .env.local .env.local.bak || true && NODE_ENV=development expo start --web",
+    "web:prod": " NODE_ENV=production expo start --web",
     "lint": "npx prettier --write .",
     "format": "npx prettier --write ."
   },
