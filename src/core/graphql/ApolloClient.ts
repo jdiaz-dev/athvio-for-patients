@@ -6,15 +6,16 @@ import { onError } from '@apollo/client/link/error';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { getToken } from 'src/modules/authentication/adapters/out/storage';
 
-const url = process.env.EXPO_PUBLIC_SERVER_GRAPHQL_APP_URL as string;
+const restUrl = process.env.EXPO_PUBLIC_GRAPHQL_REST_URL as string;
+const wsUrl = process.env.EXPO_PUBLIC_GRAPHQL_WS_URL as string;
 
 const httpLink = new HttpLink({
-  uri: url,
+  uri: restUrl,
 });
 
 const wsLink = new GraphQLWsLink(
   createClient({
-    url,
+    url: wsUrl,
     connectionParams: async () => {
       return {
         authorization: await getToken(),

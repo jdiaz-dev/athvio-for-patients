@@ -5,8 +5,15 @@
     "target": "ES6",
     "baseUrl": "./",
     "paths": {
-      "src/*": ["./src/*"],
-      //"./src/modules*"
-    },
-  }
+      "src/*": [
+        "./src/*"
+      ]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
+  ]
 }
