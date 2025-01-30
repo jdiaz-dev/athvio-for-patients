@@ -8,7 +8,7 @@ import {
 import { CredentialsSignIn, JwtDto } from 'src/modules/authentication/adapters/out/authentication';
 import { useAuthentication } from 'src/modules/authentication/adapters/out/authenticationActions';
 import { AuthContext } from 'src/modules/authentication/adapters/in/context/AuthContext';
-import { usePatient } from 'src/modules/Account/out/patientActions';
+import { usePatient } from 'src/modules/account/out/patientActions';
 
 function AuthProvider({ children }: { children: ReactNode }) {
   const { signIn } = useAuthentication();

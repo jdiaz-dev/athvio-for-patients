@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ChatScreen from 'src/modules/chat/adapters/in/components/Chat';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ScreenParamList } from 'src/shared/types/types';
-import Account from 'src/modules/Account/in/Account';
+import Account from 'src/modules/account/in/Account';
 import PatientPlanList from 'src/modules/patient-plans/adapters/in/components/PatientPlanList';
 
 const Tab = createBottomTabNavigator();

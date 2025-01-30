@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { Text } from 'react-native';
 import { View, StyleSheet } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 
@@ -36,7 +37,13 @@ function SignIn() {
         onChangeText={setPassword}
         value={password}
         secureTextEntry={secureTextEntry}
-        right={<TextInput.Icon icon={secureTextEntry ? 'eye' : 'eye-off'}  color="white" onPress={() => setSecureTextEntry(!secureTextEntry)} />}
+        right={
+          <TextInput.Icon
+            icon={secureTextEntry ? 'eye' : 'eye-off'}
+            color="white"
+            onPress={() => setSecureTextEntry(!secureTextEntry)}
+          />
+        }
       />
       <Button onPress={logIn} mode="contained" buttonColor="#2c9687">
         Log in
@@ -53,6 +60,8 @@ function SignIn() {
       >
         {error?.message}
       </Snackbar> */}
+      <Text>env var 1: {process.env.EXPO_PUBLIC_GRAPHQL_REST_URL}</Text>
+      <Text>env var 2: {process.env.EXPO_PUBLIC_GRAPHQL_WS_URL}</Text>
     </View>
   );
 }
