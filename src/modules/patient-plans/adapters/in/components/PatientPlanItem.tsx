@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import { List, Surface } from 'react-native-paper';
 import { useSelector } from 'react-redux';
-import { IngredientType } from 'src/modules/patient-plans/adapters/out/enum';
 import { PatientPlanBody } from 'src/modules/patient-plans/adapters/out/patient-plan';
+import { IngredientType } from 'src/shared/constants';
 import { ReduxStates } from 'src/shared/types/types';
 
 function PatientPlanItem({ patientPlan, index }: { patientPlan: PatientPlanBody; index: number }) {
