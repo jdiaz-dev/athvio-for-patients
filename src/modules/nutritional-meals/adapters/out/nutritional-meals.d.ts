@@ -8,8 +8,12 @@ export type GetNutritionalMealsRequest = {
   input: GetNutritionalMealsBody;
 };
 
+export type NutritionalMeal = Meal & {
+  image: string;
+};
+
 export type NutritonalMeals = {
-  data: Meal[];
+  data: NutritionalMeal[];
   meta: MetadataRecords;
 };
 

@@ -20,7 +20,6 @@ export function useNutritionalMeals() {
           input: { ...body },
         },
       });
-      console.log('----------response.data', response.data);
       if (response.data) {
         dispatch(NutritionalMealsSlice.initializeNutritionalMeals(response.data.getNutritionalMealsForPatient.data));
       }

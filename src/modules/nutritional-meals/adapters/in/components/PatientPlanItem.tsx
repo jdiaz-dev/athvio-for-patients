@@ -3,16 +3,28 @@ import { StyleSheet, Text } from 'react-native';
 import { List, Surface } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { IngredientType } from 'src/shared/constants';
-import { Meal, ReduxStates } from 'src/shared/types/types';
+import { ReduxStates } from 'src/shared/types/types';
+import { Image } from 'react-native';
+import { NutritionalMeal } from 'src/modules/nutritional-meals/adapters/out/nutritional-meals';
 
-function NutritionalMealItem({ nutritonalMeal, index }: { nutritonalMeal: Meal; index: number }) {
+function NutritionalMealItem({ nutritonalMeal, index }: { nutritonalMeal: NutritionalMeal; index: number }) {
   const [expanded, setExpanded] = useState(false);
   const { data: patientPlansState } = useSelector((state: ReduxStates) => state.patientPlans.patientPlans);
   const handlePress = () => {
     setExpanded(!expanded);
   };
   const isLastSurface = index === patientPlansState.length - 1;
-
+  const image = (
+    <Image
+      source={{
+        uri: nutritonalMeal.image,
+      }}
+      style={{
+        width: 300,
+        height: 180,
+      }}
+    />
+  );
   return (
     <>
       <Surface style={{ ...styles.card, ...(isLastSurface && styles.lastSurface) }} elevation={5}>
@@ -46,19 +58,11 @@ function NutritionalMealItem({ nutritonalMeal, index }: { nutritonalMeal: Meal; 
               <Text
                 style={styles.text}
               >{`${nutritonalMeal.cookingInstructions.length ? 'Directions:' : ''} ${nutritonalMeal.cookingInstructions}`}</Text>
+              {image}
             </>
           )}
         </List.Accordion>
-        {/* {!expanded &&
-          nutritonalMeal.meals.map((meal, indexMeal) => {
-            const isLastItem = indexMeal === nutritonalMeal.meals.length - 1;
-
-            return (
-              <>
-                <List.Item titleStyle={{ color: 'white' }} style={{ ...(isLastItem && styles.lastItem) }} title={meal.mealTag} />
-              </>
-            );
-          })} */}
+        {!expanded && image}
       </Surface>
     </>
   );
