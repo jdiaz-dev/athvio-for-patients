@@ -11,7 +11,8 @@
     "web:dev2": "[ -f .env.local ] && mv .env.local .env.local.bak || true && NODE_ENV=production expo start --web",
     "web:prod": " NODE_ENV=production expo start --web",
     "lint": "npx prettier --write .",
-    "format": "npx prettier --write ."
+    "format": "npx prettier --write .",
+    "build:dev":"eas build --platform android --profile preview"
   },
   "dependencies": {
     "@apollo/client": "^3.8.10",

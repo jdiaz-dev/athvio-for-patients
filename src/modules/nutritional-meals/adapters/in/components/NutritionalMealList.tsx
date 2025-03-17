@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { AuthContext } from 'src/modules/authentication/adapters/in/context/AuthContext';
 import { ReduxStates } from 'src/shared/types/types';
 import { useNutritionalMeals } from 'src/modules/nutritional-meals/adapters/out/NutritionalMealsActions';
-import NutritionalMealItem from 'src/modules/nutritional-meals/adapters/in/components/PatientPlanItem';
+import NutritionalMealItem from 'src/modules/nutritional-meals/adapters/in/components/NutritionalMealItem';
 import { NutritionalMeal } from 'src/modules/nutritional-meals/adapters/out/nutritional-meals';
 
 const renderItem: ListRenderItem<NutritionalMeal> = ({ item, index }) => {

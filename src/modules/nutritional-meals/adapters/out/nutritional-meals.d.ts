@@ -10,6 +10,8 @@ export type GetNutritionalMealsRequest = {
 
 export type NutritionalMeal = Meal & {
   image: string;
+  description?: string;
+  healthBenefits?: string;
 };
 
 export type NutritonalMeals = {

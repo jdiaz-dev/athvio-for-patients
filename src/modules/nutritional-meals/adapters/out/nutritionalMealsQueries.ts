@@ -7,6 +7,8 @@ export const GET_NUTRITIONAL_MEALS_FOR_PATIENTS = gql`
         _id
         name
         image
+        description
+        healthBenefits
         ingredientDetails {
           ingredientType
           customIngredient {

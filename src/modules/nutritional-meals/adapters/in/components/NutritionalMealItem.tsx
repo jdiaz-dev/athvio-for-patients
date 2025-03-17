@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { List, Surface } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { IngredientType } from 'src/shared/constants';
@@ -20,7 +20,6 @@ function NutritionalMealItem({ nutritonalMeal, index }: { nutritonalMeal: Nutrit
         uri: nutritonalMeal.image,
       }}
       style={{
-        width: 300,
         height: 180,
       }}
     />
@@ -53,12 +52,21 @@ function NutritionalMealItem({ nutritonalMeal, index }: { nutritonalMeal: Nutrit
                   ingredientDetail.ingredientType === IngredientType.UNIQUE_INGREDIENT
                     ? ingredientDetail.ingredient?.label
                     : ingredientDetail.customIngredient?.label;
-                return <Text style={styles.text} key={index2}>{`${ingredientAmount} ${ingredientLabel} ${ingredientName}`}</Text>;
+                return (
+                  <Text style={styles.text} key={index2}>
+                    - {`${ingredientAmount} ${ingredientLabel} ${ingredientName}`}
+                  </Text>
+                );
               })}
+              <Text>{'\n'}</Text>
               <Text
                 style={styles.text}
               >{`${nutritonalMeal.cookingInstructions.length ? 'Directions:' : ''} ${nutritonalMeal.cookingInstructions}`}</Text>
-              {image}
+              <Text>{'\n'}</Text>
+              <Text
+                style={styles.text}
+              >{`${nutritonalMeal.healthBenefits?.length ? 'Health benefits:' : ''} ${nutritonalMeal.healthBenefits}`}</Text>
+              <View style={{ padding: '6%' }}>{image}</View>
             </>
           )}
         </List.Accordion>
@@ -84,7 +92,8 @@ const styles = StyleSheet.create({
   },
   text: {
     margin: 'auto',
-    paddingLeft: 25,
+    paddingLeft: '5%',
+    paddingRight: '3%',
     width: 300,
     color: 'white',
   },
