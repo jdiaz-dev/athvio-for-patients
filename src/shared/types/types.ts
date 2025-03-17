@@ -73,7 +73,9 @@ export type ReduxStates = {
 
 export type ScreenParamList = {
   SignIn: undefined;
+  SignUp: undefined;
   Navigation: { tabTitle: string };
 };
 export type SignInScreenNavigationProp = NativeStackNavigationProp<ScreenParamList, 'SignIn'>;
+export type SignUpScreenNavigationProp = NativeStackNavigationProp<ScreenParamList, 'SignUp'>;
 export type NavigationScreenNavigationProp = NativeStackNavigationProp<ScreenParamList, 'Navigation'>;

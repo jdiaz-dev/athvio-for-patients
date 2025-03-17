@@ -62,11 +62,11 @@ function Navigation({ navigation }: NavigationProps) {
       )}
     >
       <Tab.Screen
-        name="Meals"
+        name="NutritionalMeals"
         component={NutritionalMealList}
         options={{
           tabBarLabel: 'Meals',
-          tabBarIcon: ({ color, size }) => <Icon name="home" size={size} color={color} />,
+          tabBarIcon: ({ color, size }) => <Icon name="food" size={size} color={color} />,
         }}
       />
       <Tab.Screen

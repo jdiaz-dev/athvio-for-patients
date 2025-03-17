@@ -12,6 +12,7 @@ import PrivateRoute from 'src/core/router/PrivateRoute';
 import { Provider } from 'react-redux';
 import store from 'src/core/redux/configureStore';
 import { ScreenParamList } from 'src/shared/types/types';
+import SignUp from 'src/modules/authentication/adapters/in/SignUp';
 
 const theme = {
   ...DefaultTheme,
@@ -31,11 +32,29 @@ export default function App() {
         <NavigationContainer>
           <Provider store={store}>
             <AuthProvider>
-              <Stack.Navigator initialRouteName="SignIn">
+              <Stack.Navigator initialRouteName="SignUp">
+                <Stack.Screen
+                  name="SignUp"
+                  options={() => ({
+                    headerShown: false,
+                    headerLeft: () => null,
+                    headerTitleStyle: {
+                      ...styles.headerTitleStyle,
+                    },
+                    headerStyle: {
+                      ...styles.headerStyle,
+                    },
+                  })}
+                  component={() => (
+                    <PublicRoute>
+                      <SignUp />
+                    </PublicRoute>
+                  )}
+                />
                 <Stack.Screen
                   name="SignIn"
                   options={() => ({
-                    headerShown: true,
+                    headerShown: false,
                     headerLeft: () => null,
                     headerTitleStyle: {
                       ...styles.headerTitleStyle,

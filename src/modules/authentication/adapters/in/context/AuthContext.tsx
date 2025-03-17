@@ -7,6 +7,7 @@ export type AuthContextData = {
   assignedProfessional: string;
   fullnameAndSurname: string;
   signInHandler: (credentials: CredentialsSignIn) => Promise<any>;
+  signUpHandler: (credentials: CredentialsSignIn) => Promise<any>;
   signOutHandler: () => void;
 };
 

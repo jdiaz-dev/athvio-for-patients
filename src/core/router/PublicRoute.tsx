@@ -8,7 +8,7 @@ function PublicRoute({ children }: { children: ReactNode }) {
   const { isAuthenticated } = useContext(AuthContext);
 
   if (isAuthenticated) {
-    navigation.navigate('Navigation', { tabTitle: 'Plans' });
+    navigation.navigate('Navigation', { tabTitle: 'Meals' });
   }
   return <>{children}</>;
 }

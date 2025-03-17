@@ -9,10 +9,18 @@ export type JwtDto = {
   token: string;
 };
 
+export type SignInRequest = {
+  input: CredentialsSignIn;
+};
+
 export type SignInResponse = {
   signIn: JwtDto;
 };
 
-export type SignInRequest = {
+export type SignUpRequest = {
   input: CredentialsSignIn;
+};
+
+export type SignUpResponse = {
+  signUpPatientFromMobile: JwtDto;
 };

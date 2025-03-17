@@ -9,3 +9,13 @@ export const SIGN_IN = gql`
     }
   }
 `;
+
+export const SIGN_UP_PATIENT_FROM_MOBILE = gql`
+  mutation _signUpPatientFromMobile($input: SignUpPatientFromMobileDto!) {
+    signUpPatientFromMobile(input: $input) {
+      _id
+      role
+      token
+    }
+  }
+`;

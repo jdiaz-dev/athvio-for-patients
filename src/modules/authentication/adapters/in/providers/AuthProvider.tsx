@@ -11,7 +11,7 @@ import { AuthContext } from 'src/modules/authentication/adapters/in/context/Auth
 import { usePatient } from 'src/modules/account/out/patientActions';
 
 function AuthProvider({ children }: { children: ReactNode }) {
-  const { signIn } = useAuthentication();
+  const { signIn, signUp } = useAuthentication();
   const { getPatient } = usePatient();
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -35,7 +35,8 @@ function AuthProvider({ children }: { children: ReactNode }) {
         const { data } = await getPatient({ patient });
         if (data) {
           setAssignedProfessional(data.getPatientForMobile.professional);
-          setFullnameAndSurname(`${data.getPatientForMobile.user.firstname} ${data.getPatientForMobile.user.lastname}`);
+          if (data.getPatientForMobile.user.firstname || data.getPatientForMobile.user.lastname)
+            setFullnameAndSurname(`${data.getPatientForMobile.user.firstname} ${data.getPatientForMobile.user.lastname}`);
         }
       }
     };
@@ -54,6 +55,11 @@ function AuthProvider({ children }: { children: ReactNode }) {
     if (data) await saveJwt(data.signIn);
   };
 
+  const signUpHandler = async (credentials: CredentialsSignIn) => {
+    const { data } = await signUp(credentials);
+    if (data) await saveJwt(data.signUpPatientFromMobile);
+  };
+
   const signOutHandler = () => {
     removeSessionCokkies();
     setIsAuthenticated(false);
@@ -68,6 +74,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
         assignedProfessional,
         fullnameAndSurname,
         signInHandler,
+        signUpHandler,
         signOutHandler,
       }}
     >

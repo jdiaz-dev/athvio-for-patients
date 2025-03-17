@@ -1,12 +1,16 @@
 import React, { useContext, useState } from 'react';
-import { Text } from 'react-native';
-import { View, StyleSheet } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
+import { View } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 
 import { AuthContext } from 'src/modules/authentication/adapters/in/context/AuthContext';
+import { SignUpScreenNavigationProp } from 'src/shared/types/types';
+import { useNavigation } from '@react-navigation/native';
+import { formStyles } from 'src/modules/authentication/adapters/in/styles/styles';
 
 function SignIn() {
   const { signInHandler } = useContext(AuthContext);
+  const navigation = useNavigation<SignUpScreenNavigationProp>();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,24 +32,33 @@ function SignIn() {
   const saveCredentials = () => {};
 
   return (
-    <View style={{ /*  alignItems: 'center', */ justifyContent: 'center', backgroundColor: '#121212', height: '100%' }}>
-      <TextInput mode="outlined" style={styles.input} textColor="white" onChangeText={setEmail} value={email} />
+    <View style={formStyles.container}>
+      <Text style={formStyles.title}>Sign In</Text>
       <TextInput
+        label="Email Address"
         mode="outlined"
-        style={styles.input}
+        style={formStyles.input}
+        textColor="white"
+        onChangeText={setEmail}
+        value={email}
+      />
+      <TextInput
+        label="Password"
+        mode="outlined"
+        style={formStyles.input}
         textColor="white"
         onChangeText={setPassword}
         value={password}
         secureTextEntry={secureTextEntry}
-        right={
+        /* right={
           <TextInput.Icon
             icon={secureTextEntry ? 'eye' : 'eye-off'}
             color="white"
             onPress={() => setSecureTextEntry(!secureTextEntry)}
           />
-        }
+        } */
       />
-      <Button onPress={logIn} mode="contained" buttonColor="#2c9687">
+      <Button style={formStyles.button} onPress={logIn} mode="contained" buttonColor="#2c9687">
         Log in
       </Button>
       {/* <Snackbar
@@ -62,18 +75,13 @@ function SignIn() {
       </Snackbar> */}
       <Text>env var 1: {process.env.EXPO_PUBLIC_GRAPHQL_REST_URL}</Text>
       <Text>env var 2: {process.env.EXPO_PUBLIC_GRAPHQL_WS_URL}</Text>
+      <TouchableOpacity>
+        <Text style={formStyles.link} onPress={() => navigation.navigate('SignUp')}>
+          Create an account
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    backgroundColor: '#323232',
-  },
-});
 
 export default SignIn;

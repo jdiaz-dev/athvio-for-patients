@@ -22,5 +22,5 @@ export type GetNutritionalMealsResponse = {
 };
 
 export type NutritionalMealsInitialState = {
-  nutritionalMeals: { data: Meal[]; error: string | null };
+  nutritionalMeals: { data: NutritionalMeal[]; error: string | null };
 };
