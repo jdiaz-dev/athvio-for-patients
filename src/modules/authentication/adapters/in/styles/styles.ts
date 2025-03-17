@@ -13,11 +13,12 @@ export const formStyles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 20,
     textAlign: 'center',
-    color: '#00A896',
+    color: '#258478',
   },
   input: {
     marginBottom: 10,
     // backgroundColor: '#1E1E1E',
+    borderColor: '#00A896',
   },
   button: {
     marginTop: 20,
