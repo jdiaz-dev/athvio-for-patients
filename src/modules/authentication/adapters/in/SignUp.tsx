@@ -7,6 +7,7 @@ import { AuthContext } from 'src/modules/authentication/adapters/in/context/Auth
 import { useNavigation } from '@react-navigation/native';
 import { SignInScreenNavigationProp } from 'src/shared/types/types';
 import { formStyles } from 'src/modules/authentication/adapters/in/styles/styles';
+import TitleApp from 'src/modules/authentication/adapters/in/TitleApp';
 
 const SignUp = () => {
   const navigation = useNavigation<SignInScreenNavigationProp>();
@@ -22,6 +23,7 @@ const SignUp = () => {
 
   return (
     <View style={formStyles.container}>
+      {/* <TitleApp /> */}
       <Text style={formStyles.title}>Sign Up</Text>
       <Formik
         initialValues={{ email: '', password: '' }}
@@ -41,7 +43,7 @@ const SignUp = () => {
               onBlur={handleBlur('email')}
               error={touched.email && errors.email}
               style={formStyles.input}
-              textColor="white"
+            //   textColor="white"
             />
             <TextInput
               label="Password"
@@ -52,7 +54,7 @@ const SignUp = () => {
               onBlur={handleBlur('password')}
               error={touched.password && errors.password}
               style={formStyles.input}
-              textColor="white"
+            //   textColor="white"
               right={
                 <TextInput.Icon name={passwordVisible ? 'eye-off' : 'eye'} onPress={() => setPasswordVisible(!passwordVisible)} />
               }

@@ -7,6 +7,7 @@ import { AuthContext } from 'src/modules/authentication/adapters/in/context/Auth
 import { SignUpScreenNavigationProp } from 'src/shared/types/types';
 import { useNavigation } from '@react-navigation/native';
 import { formStyles } from 'src/modules/authentication/adapters/in/styles/styles';
+import TitleApp from 'src/modules/authentication/adapters/in/TitleApp';
 
 function SignIn() {
   const { signInHandler } = useContext(AuthContext);
@@ -33,12 +34,13 @@ function SignIn() {
 
   return (
     <View style={formStyles.container}>
+      {/* <TitleApp /> */}
       <Text style={formStyles.title}>Sign In</Text>
       <TextInput
         label="Email Address"
         mode="outlined"
         style={formStyles.input}
-        textColor="white"
+        // textColor="white"
         onChangeText={setEmail}
         value={email}
       />
@@ -46,7 +48,7 @@ function SignIn() {
         label="Password"
         mode="outlined"
         style={formStyles.input}
-        textColor="white"
+        // textColor="white"
         onChangeText={setPassword}
         value={password}
         secureTextEntry={secureTextEntry}
