@@ -32,10 +32,6 @@ function NutritionalMealList() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Text>{nutritionalMealsState.length}</Text>
-      <Text>{nutritionalMealsState.length ? nutritionalMealsState.length : 'nothing'}</Text>
-      {error !== null && <Text>{error}</Text>}
-
       <FlatList
         data={nutritionalMealsState || []}
         renderItem={renderItem}

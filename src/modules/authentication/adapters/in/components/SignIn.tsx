@@ -75,8 +75,8 @@ function SignIn() {
       >
         {error?.message}
       </Snackbar> */}
-      <Text>env var 1: {process.env.EXPO_PUBLIC_GRAPHQL_REST_URL}</Text>
-      <Text>env var 2: {process.env.EXPO_PUBLIC_GRAPHQL_WS_URL}</Text>
+      {/* <Text>env var 1: {process.env.EXPO_PUBLIC_GRAPHQL_REST_URL}</Text>
+      <Text>env var 2: {process.env.EXPO_PUBLIC_GRAPHQL_WS_URL}</Text> */}
       <TouchableOpacity>
         <Text style={formStyles.link} onPress={() => navigation.navigate('SignUp')}>
           Create an account
