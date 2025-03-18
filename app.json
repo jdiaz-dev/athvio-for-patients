@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "athvio-for-patients",
-    "slug": "athvio-for-patients",
+    "name": "AnticancerMeals",
+    "slug": "AnticancerMeals",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/onions.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,7 +13,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/onions.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.athvio.athvioforpatients"
@@ -23,7 +23,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/onions.png",
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
@@ -34,8 +34,11 @@
       "typedRoutes": true
     },
     "extra": {
+      "router": {
+        "origin": false
+      },
       "eas": {
-        "projectId": "6d538d4d-1043-453a-bbd6-dd60242d8be7"
+        "projectId": "8a58e27c-e449-435a-9138-a2d1a60692f6"
       }
     }
   }

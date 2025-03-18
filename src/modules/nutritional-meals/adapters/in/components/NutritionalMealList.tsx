@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { StyleSheet, FlatList, ListRenderItem, View } from 'react-native';
+import { StyleSheet, FlatList, ListRenderItem, View, Text } from 'react-native';
 import { useSelector } from 'react-redux';
 import { AuthContext } from 'src/modules/authentication/adapters/in/context/AuthContext';
 import { ReduxStates } from 'src/shared/types/types';
@@ -32,6 +32,9 @@ function NutritionalMealList() {
 
   return (
     <View style={{ flex: 1 }}>
+      <Text>{nutritionalMealsState.length}</Text>
+      <Text>{nutritionalMealsState.length ? nutritionalMealsState.length : 'nothing'}</Text>
+
       <FlatList
         data={nutritionalMealsState || []}
         renderItem={renderItem}

@@ -12,6 +12,7 @@
     "web:prod": " NODE_ENV=production expo start --web",
     "lint": "npx prettier --write .",
     "format": "npx prettier --write .",
+    "build:config":"eas build:configure",
     "build:dev":"eas build --platform android --profile preview"
   },
   "dependencies": {
