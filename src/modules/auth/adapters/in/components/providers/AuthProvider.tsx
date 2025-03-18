@@ -5,13 +5,13 @@ import {
   getPatientId,
   removeSessionCokkies,
 } from 'src/modules/auth/adapters/out/storage';
-import { CredentialsSignIn, JwtDto } from 'src/modules/auth/adapters/out/authentication';
-import { useAuthentication } from 'src/modules/auth/adapters/out/authenticationActions';
+import { CredentialsSignIn, JwtDto } from 'src/modules/auth/adapters/out/auth';
+import { useAuth } from 'src/modules/auth/adapters/out/authActions';
 import { AuthContext } from 'src/modules/auth/adapters/in/context/AuthContext';
 import { usePatient } from 'src/modules/account/out/patientActions';
 
 function AuthProvider({ children }: { children: ReactNode }) {
-  const { signIn, signUp } = useAuthentication();
+  const { signIn, signUp } = useAuth();
   const { getPatient } = usePatient();
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);

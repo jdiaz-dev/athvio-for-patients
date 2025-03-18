@@ -1,4 +1,5 @@
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { AuthInitialState } from 'src/modules/auth/adapters/out/auth';
 import { ChatInitialState } from 'src/modules/chat/adapters/out/chat';
 import { NutritionalMealsInitialState } from 'src/modules/nutritional-meals/adapters/out/nutritional-meals';
 import { PatientPlanInitialState } from 'src/modules/patient-plans/adapters/out/patient-plan';
@@ -69,6 +70,7 @@ export type ReduxStates = {
   chat: ChatInitialState;
   patientPlans: PatientPlanInitialState;
   nutritionalMeals: NutritionalMealsInitialState;
+  auth: AuthInitialState;
 };
 
 export type ScreenParamList = {

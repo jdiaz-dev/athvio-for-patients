@@ -27,6 +27,6 @@ export const formStyles = StyleSheet.create({
   link: {
     color: '#00A896',
     textAlign: 'center',
-    marginTop: 15,
+    marginTop: 45,
   },
 });

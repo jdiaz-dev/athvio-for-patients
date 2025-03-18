@@ -24,3 +24,7 @@ export type SignUpRequest = {
 export type SignUpResponse = {
   signUpPatientFromMobile: JwtDto;
 };
+
+export type AuthInitialState = {
+  auth: { data: any; error: string | null };
+};
