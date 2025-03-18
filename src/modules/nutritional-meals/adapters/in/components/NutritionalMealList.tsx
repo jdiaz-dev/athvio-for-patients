@@ -14,7 +14,7 @@ const renderItem: ListRenderItem<NutritionalMeal> = ({ item, index }) => {
 function NutritionalMealList() {
   const { patient } = useContext(AuthContext);
   const { getNutritionalMeals } = useNutritionalMeals();
-  const { data: nutritionalMealsState } = useSelector((state: ReduxStates) => state.nutritionalMeals.nutritionalMeals);
+  const { data: nutritionalMealsState, error } = useSelector((state: ReduxStates) => state.nutritionalMeals.nutritionalMeals);
 
   useEffect(() => {
     const fetchNutritonalMeals = async () => {
@@ -34,6 +34,7 @@ function NutritionalMealList() {
     <View style={{ flex: 1 }}>
       <Text>{nutritionalMealsState.length}</Text>
       <Text>{nutritionalMealsState.length ? nutritionalMealsState.length : 'nothing'}</Text>
+      {error !== null && <Text>{error}</Text>}
 
       <FlatList
         data={nutritionalMealsState || []}

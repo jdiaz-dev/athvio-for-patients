@@ -1,12 +1,13 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { nutritionalMealsInitialState } from 'src/modules/nutritional-meals/adapters/in/slicers/NutritionalMealsInitialState';
+import { NutritionalMeal } from 'src/modules/nutritional-meals/adapters/out/nutritional-meals';
 import { Meal } from 'src/shared/types/types';
 
 const nutritonalMealsSlice = createSlice({
   name: 'nutritionalMeals',
   initialState: nutritionalMealsInitialState,
   reducers: {
-    initializeNutritionalMeals: (state, action: PayloadAction<Meal[]>) => {
+    initializeNutritionalMeals: (state, action: PayloadAction<NutritionalMeal[]>) => {
       state.nutritionalMeals.data = action.payload;
       return state;
     },

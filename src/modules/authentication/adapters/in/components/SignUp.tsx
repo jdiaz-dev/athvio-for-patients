@@ -6,8 +6,8 @@ import * as Yup from 'yup';
 import { AuthContext } from 'src/modules/authentication/adapters/in/context/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import { SignInScreenNavigationProp } from 'src/shared/types/types';
-import { formStyles } from 'src/modules/authentication/adapters/in/styles/styles';
-import TitleApp from 'src/modules/authentication/adapters/in/TitleApp';
+import { formStyles } from 'src/modules/authentication/adapters/in/components/styles/styles';
+import TitleApp from 'src/modules/authentication/adapters/in/components/TitleApp';
 
 const SignUp = () => {
   const navigation = useNavigation<SignInScreenNavigationProp>();

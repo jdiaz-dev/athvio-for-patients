@@ -6,8 +6,8 @@ import { TextInput, Button } from 'react-native-paper';
 import { AuthContext } from 'src/modules/authentication/adapters/in/context/AuthContext';
 import { SignUpScreenNavigationProp } from 'src/shared/types/types';
 import { useNavigation } from '@react-navigation/native';
-import { formStyles } from 'src/modules/authentication/adapters/in/styles/styles';
-import TitleApp from 'src/modules/authentication/adapters/in/TitleApp';
+import { formStyles } from 'src/modules/authentication/adapters/in/components/styles/styles';
+import TitleApp from 'src/modules/authentication/adapters/in/components/TitleApp';
 
 function SignIn() {
   const { signInHandler } = useContext(AuthContext);
