@@ -4,10 +4,10 @@ import {
   getToken,
   getPatientId,
   removeSessionCokkies,
-} from 'src/modules/authentication/adapters/out/storage';
-import { CredentialsSignIn, JwtDto } from 'src/modules/authentication/adapters/out/authentication';
-import { useAuthentication } from 'src/modules/authentication/adapters/out/authenticationActions';
-import { AuthContext } from 'src/modules/authentication/adapters/in/context/AuthContext';
+} from 'src/modules/auth/adapters/out/storage';
+import { CredentialsSignIn, JwtDto } from 'src/modules/auth/adapters/out/authentication';
+import { useAuthentication } from 'src/modules/auth/adapters/out/authenticationActions';
+import { AuthContext } from 'src/modules/auth/adapters/in/context/AuthContext';
 import { usePatient } from 'src/modules/account/out/patientActions';
 
 function AuthProvider({ children }: { children: ReactNode }) {

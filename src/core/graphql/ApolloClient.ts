@@ -4,7 +4,7 @@ import { createClient } from 'graphql-ws';
 import { setContext } from '@apollo/client/link/context';
 import { onError } from '@apollo/client/link/error';
 import { getMainDefinition } from '@apollo/client/utilities';
-import { getToken } from 'src/modules/authentication/adapters/out/storage';
+import { getToken } from 'src/modules/auth/adapters/out/storage';
 
 const restUrl = process.env.EXPO_PUBLIC_GRAPHQL_REST_URL as string;
 const wsUrl = process.env.EXPO_PUBLIC_GRAPHQL_WS_URL as string;

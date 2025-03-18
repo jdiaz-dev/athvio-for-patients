@@ -1,11 +1,12 @@
 import React, { useContext, useEffect } from 'react';
-import { StyleSheet, FlatList, ListRenderItem, View, Text } from 'react-native';
+import { StyleSheet, FlatList, ListRenderItem, View } from 'react-native';
 import { useSelector } from 'react-redux';
-import { AuthContext } from 'src/modules/authentication/adapters/in/context/AuthContext';
+import { AuthContext } from 'src/modules/auth/adapters/in/context/AuthContext';
 import { ReduxStates } from 'src/shared/types/types';
 import { useNutritionalMeals } from 'src/modules/nutritional-meals/adapters/out/NutritionalMealsActions';
 import NutritionalMealItem from 'src/modules/nutritional-meals/adapters/in/components/NutritionalMealItem';
 import { NutritionalMeal } from 'src/modules/nutritional-meals/adapters/out/nutritional-meals';
+import MessageSnackbar from 'src/shared/components/MessageSnackbar';
 
 const renderItem: ListRenderItem<NutritionalMeal> = ({ item, index }) => {
   return <NutritionalMealItem nutritonalMeal={item} index={index} />;
@@ -31,15 +32,18 @@ function NutritionalMealList() {
   }, [patient]);
 
   return (
-    <View style={{ flex: 1 }}>
-      <FlatList
-        data={nutritionalMealsState || []}
-        renderItem={renderItem}
-        keyExtractor={(item) => item._id}
-        showsVerticalScrollIndicator={false}
-        style={styles.container}
-      />
-    </View>
+    <>
+      <View style={{ flex: 1 }}>
+        <FlatList
+          data={nutritionalMealsState || []}
+          renderItem={renderItem}
+          keyExtractor={(item) => item._id}
+          showsVerticalScrollIndicator={false}
+          style={styles.container}
+        />
+      </View>
+      <MessageSnackbar error={error} />
+    </>
   );
 }
 

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { StyleSheet, FlatList, ListRenderItem, View, Text, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
-import { AuthContext } from 'src/modules/authentication/adapters/in/context/AuthContext';
+import { AuthContext } from 'src/modules/auth/adapters/in/context/AuthContext';
 import { PatientPlanBody } from 'src/modules/patient-plans/adapters/out/patient-plan';
 import { usePatientPlans } from 'src/modules/patient-plans/adapters/out/PatientPlanActions';
 import { ReduxStates } from 'src/shared/types/types';

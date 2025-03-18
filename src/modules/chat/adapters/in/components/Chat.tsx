@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { View, FlatList, StyleSheet, ListRenderItem } from 'react-native';
 import { TextInput, List, IconButton, Text } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { AuthContext } from 'src/modules/authentication/adapters/in/context/AuthContext';
+import { AuthContext } from 'src/modules/auth/adapters/in/context/AuthContext';
 import { useChat } from 'src/modules/chat/adapters/out/ChatActions';
 import { CommentBody } from 'src/modules/chat/adapters/out/chat';
 import { Commenter } from 'src/modules/chat/adapters/out/chat.enum';

@@ -3,11 +3,11 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { AuthContext } from 'src/modules/authentication/adapters/in/context/AuthContext';
+import { AuthContext } from 'src/modules/auth/adapters/in/context/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 import { SignInScreenNavigationProp } from 'src/shared/types/types';
-import { formStyles } from 'src/modules/authentication/adapters/in/components/styles/styles';
-import TitleApp from 'src/modules/authentication/adapters/in/components/TitleApp';
+import { formStyles } from 'src/modules/auth/adapters/in/components/styles/styles';
+import TitleApp from 'src/modules/auth/adapters/in/components/TitleApp';
 
 const SignUp = () => {
   const navigation = useNavigation<SignInScreenNavigationProp>();

@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { CredentialsSignIn } from 'src/modules/authentication/adapters/out/authorization';
+import { CredentialsSignIn } from 'src/modules/auth/adapters/out/authorization';
 
 export type AuthContextData = {
   isAuthenticated: boolean;

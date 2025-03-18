@@ -3,16 +3,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
 import { ApolloProvider } from '@apollo/client';
-import SignIn from './src/modules/authentication/adapters/in/components/SignIn';
+import SignIn from './src/modules/auth/adapters/in/components/SignIn';
 import { apolloClient } from './src/core/graphql/ApolloClient';
 import Navigation from './src/modules/Navigation';
-import AuthProvider from 'src/modules/authentication/adapters/in/components/providers/AuthProvider';
+import AuthProvider from 'src/modules/auth/adapters/in/components/providers/AuthProvider';
 import PublicRoute from 'src/core/router/PublicRoute';
 import PrivateRoute from 'src/core/router/PrivateRoute';
 import { Provider } from 'react-redux';
 import store from 'src/core/redux/configureStore';
 import { ScreenParamList } from 'src/shared/types/types';
-import SignUp from 'src/modules/authentication/adapters/in/components/SignUp';
+import SignUp from 'src/modules/auth/adapters/in/components/SignUp';
 
 const theme = {
   ...DefaultTheme,

@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { JwtDto } from './authentication.d';
+import { JwtDto } from './authentication';
 
 const TOKEN_COOKIE = 'auth.token';
 const ROLE = 'auth.role';

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { View } from 'react-native';
-import { AuthContext } from 'src/modules/authentication/adapters/in/context/AuthContext';
+import { AuthContext } from 'src/modules/auth/adapters/in/context/AuthContext';
 import { Button, Text } from 'react-native-paper';
 
 function Account() {
