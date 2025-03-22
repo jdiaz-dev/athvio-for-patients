@@ -16,7 +16,11 @@
       }
     },
     "production": {
-      "autoIncrement": true
+      "autoIncrement": true,
+      "env": {
+        "EXPO_PUBLIC_GRAPHQL_REST_URL": "https://athvio-nutrition-backend-production.up.railway.app/graphql",
+        "EXPO_PUBLIC_GRAPHQL_WS_URL": "wss://athvio-nutrition-backend-production.up.railway.app/graphql"
+      }
     }
   },
   "submit": {

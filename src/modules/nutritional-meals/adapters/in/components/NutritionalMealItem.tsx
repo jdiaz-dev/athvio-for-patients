@@ -91,10 +91,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#323232',
   },
   text: {
-    margin: 'auto',
     paddingLeft: '5%',
     paddingRight: '3%',
-    width: 300,
     color: 'white',
   },
 

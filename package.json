@@ -13,7 +13,8 @@
     "lint": "npx prettier --write .",
     "format": "npx prettier --write .",
     "build:config":"eas build:configure",
-    "build:dev":"eas build --platform android --profile preview"
+    "build:dev":"eas build --platform android --profile preview",
+    "build:pre":"eas build --platform android"
   },
   "dependencies": {
     "@apollo/client": "^3.8.10",
