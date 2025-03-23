@@ -13,6 +13,7 @@ import { Provider } from 'react-redux';
 import store from 'src/core/redux/configureStore';
 import { ScreenParamList } from 'src/shared/types/types';
 import SignUp from 'src/modules/auth/adapters/in/components/SignUp';
+import Frecuency from 'src/modules/frecuency/Frecuency';
 
 const theme = {
   ...DefaultTheme,
@@ -25,14 +26,49 @@ const theme = {
 
 const Stack = createNativeStackNavigator<ScreenParamList>();
 
+const linking = {
+  prefixes: ['http://localhost:19006', 'https://yourapp.com'],
+  config: {
+    screens: {
+      SignUp: 'signup',
+      SignIn: 'signin',
+      Navigation: {
+        path: 'navigation/:tabTitle',
+        parse: {
+          tabTitle: (title: string) => decodeURIComponent(title),
+        },
+      },
+      Frecuency: 'frecuency',
+    },
+  },
+};
+
 export default function App() {
   return (
     <ApolloProvider client={apolloClient}>
       <PaperProvider theme={theme}>
-        <NavigationContainer>
+        <NavigationContainer linking={linking}>
           <Provider store={store}>
             <AuthProvider>
               <Stack.Navigator initialRouteName="SignUp">
+                <Stack.Screen
+                  name="Frecuency"
+                  options={{
+                    headerShown: false,
+                    headerTitle: 'Frecuency',
+                    headerTitleStyle: {
+                      ...styles.headerTitleStyle,
+                    },
+                    headerStyle: {
+                      ...styles.headerStyle,
+                    },
+                  }}
+                  component={() => (
+                    <PublicRoute>
+                      <Frecuency />
+                    </PublicRoute>
+                  )}
+                />
                 <Stack.Screen
                   name="SignUp"
                   options={() => ({
