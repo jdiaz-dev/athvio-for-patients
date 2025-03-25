@@ -76,7 +76,7 @@ function SignIn() {
       </Formik>
       <TouchableOpacity>
         <Text style={formStyles.link} onPress={() => navigation.navigate('SignUp')}>
-          Create an account
+          Don't have an account? Sign up
         </Text>
       </TouchableOpacity>
     </View>

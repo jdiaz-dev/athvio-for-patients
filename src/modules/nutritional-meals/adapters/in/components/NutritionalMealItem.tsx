@@ -31,14 +31,21 @@ function NutritionalMealItem({ nutritonalMeal, index }: { nutritonalMeal: Nutrit
           id={nutritonalMeal._id}
           title={`${nutritonalMeal.name}`}
           style={{ ...styles.accordion }}
-          titleStyle={{ width: 300, fontWeight: 'bold', color: '#84e0d2' }}
+          titleStyle={{ width: 300, fontWeight: 'bold', color: 'white' }}
           expanded={expanded}
           onPress={handlePress}
           right={(props) => <List.Icon {...props} icon={expanded ? 'chevron-up' : 'chevron-down'} color="white" />}
         >
           {expanded && (
             <>
-              <List.Item title={nutritonalMeal.mealTag} titleStyle={{ color: 'white' }} />
+              <List.Item
+                title={nutritonalMeal.mealTag}
+                titleStyle={
+                  {
+                    /* color: 'white' */
+                  }
+                }
+              />
               {nutritonalMeal.ingredientDetails.map((ingredientDetail, index2) => {
                 const ingredientAmount =
                   ingredientDetail.ingredientType === IngredientType.UNIQUE_INGREDIENT
@@ -80,7 +87,9 @@ export default NutritionalMealItem;
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#1E1E1E',
+    // backgroundColor: '#1E1E1E',
+    // backgroundColor: '#2c9687',
+
     borderRadius: 8,
     marginBottom: 16,
     overflow: 'hidden',
@@ -88,12 +97,13 @@ const styles = StyleSheet.create({
   accordion: {
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
-    backgroundColor: '#323232',
+    // backgroundColor: '#323232',
+    backgroundColor: '#2c9687',
   },
   text: {
     paddingLeft: '5%',
     paddingRight: '3%',
-    color: 'white',
+    // color: 'white',
   },
 
   lastItem: {

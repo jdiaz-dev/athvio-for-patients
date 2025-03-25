@@ -65,7 +65,7 @@ function Navigation({ navigation }: NavigationProps) {
         name="NutritionalMeals"
         component={NutritionalMealList}
         options={{
-          tabBarLabel: 'Meals',
+          tabBarLabel: 'Anticancer meals',
           tabBarIcon: ({ color, size }) => <Icon name="food" size={size} color={color} />,
         }}
       />

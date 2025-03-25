@@ -75,7 +75,7 @@ const SignUp = () => {
       </Formik>
       <TouchableOpacity>
         <Text style={formStyles.link} onPress={() => navigation.navigate('SignIn')}>
-          Already have an account?
+          Already have an account? Sign in
         </Text>
       </TouchableOpacity>
     </View>
