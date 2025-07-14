@@ -1,5 +1,5 @@
 export type PatientBody = {
-  _id: string;
+  uuid: string;
   user: {
     firstname: string;
     lastname: string;

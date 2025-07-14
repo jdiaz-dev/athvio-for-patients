@@ -46,7 +46,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
 
   const saveJwt = async (data: JwtDto) => {
     await createSessionCookies({ ...data });
-    setPatient(data._id);
+    setPatient(data.uuid);
     setIsAuthenticated(true);
   };
 

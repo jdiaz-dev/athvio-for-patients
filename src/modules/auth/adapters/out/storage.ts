@@ -3,10 +3,10 @@ import { JwtDto } from './auth';
 
 const TOKEN_COOKIE = 'auth.token';
 const ROLE = 'auth.role';
-const ID = 'auth._id';
+const ID = 'auth.uuid';
 
-export async function createSessionCookies({ _id, role, token }: JwtDto) {
-  await AsyncStorage.setItem(ID, _id);
+export async function createSessionCookies({ uuid, role, token }: JwtDto) {
+  await AsyncStorage.setItem(ID, uuid);
   await AsyncStorage.setItem(ROLE, role);
   await AsyncStorage.setItem(TOKEN_COOKIE, token);
 }

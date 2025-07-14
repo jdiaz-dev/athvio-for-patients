@@ -59,7 +59,7 @@ function PatientPlanList() {
       <FlatList
         data={patientPlansState || []}
         renderItem={renderItem}
-        keyExtractor={(item) => item._id}
+        keyExtractor={(item) => item.uuid}
         showsVerticalScrollIndicator={false}
         style={styles.container}
       />

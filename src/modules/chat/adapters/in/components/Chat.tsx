@@ -36,7 +36,7 @@ const ChatScreen = () => {
     if (patient !== null && currentMessage.trim()) {
       setCurrentMessage('');
       const comment = {
-        _id: '',
+        uuid: '',
         commenter: Commenter.PATIENT,
         content: currentMessage.trim(),
         createdAt: new Date().toISOString(),
@@ -71,7 +71,7 @@ const ChatScreen = () => {
       <FlatList
         data={chatState ? chatState.comments : []}
         renderItem={renderItem}
-        keyExtractor={(item) => item._id}
+        keyExtractor={(item) => item.uuid}
         contentContainerStyle={styles.chatContainer}
       />
       <View style={styles.messageBoxContainer}>

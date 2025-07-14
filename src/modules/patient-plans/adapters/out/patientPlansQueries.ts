@@ -3,11 +3,11 @@ import { gql } from '@apollo/client';
 export const PATIENT_PLAN_FOR_MOBILE = gql`
   query _getPatientPlansForMobile($patientPlans: GetPatientPlansForMobileDto!) {
     getPatientPlansForMobile(patientPlans: $patientPlans) {
-      _id
+      uuid
       title
       assignedDate
       meals {
-        _id
+        uuid
         position
         mealTag
         name

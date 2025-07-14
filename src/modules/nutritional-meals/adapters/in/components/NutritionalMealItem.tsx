@@ -28,7 +28,7 @@ function NutritionalMealItem({ nutritonalMeal, index }: { nutritonalMeal: Nutrit
     <>
       <Surface style={{ ...styles.card, ...(isLastSurface && styles.lastSurface) }} elevation={5}>
         <List.Accordion
-          id={nutritonalMeal._id}
+          id={nutritonalMeal.uuid}
           title={`${nutritonalMeal.name}`}
           style={{ ...styles.accordion }}
           titleStyle={{ width: 300, fontWeight: 'bold', color: 'white' }}
@@ -38,6 +38,7 @@ function NutritionalMealItem({ nutritonalMeal, index }: { nutritonalMeal: Nutrit
         >
           {expanded && (
             <>
+              {nutritonalMeal.description && <Text style={styles.text}>{`${nutritonalMeal.description}`}</Text>}
               <List.Item
                 title={nutritonalMeal.mealTag}
                 titleStyle={

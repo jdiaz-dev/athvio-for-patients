@@ -4,7 +4,7 @@ export const GET_NUTRITIONAL_MEALS_FOR_PATIENTS = gql`
   query _getNutritionalMealsForPatient($input: GetNutritionalMealsForPatientDto!) {
     getNutritionalMealsForPatient(input: $input) {
       data {
-        _id
+        uuid
         name
         image
         description

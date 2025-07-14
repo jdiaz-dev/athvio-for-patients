@@ -18,7 +18,7 @@ function PatientPlanItem({ patientPlan, index }: { patientPlan: PatientPlanBody;
     <>
       <Surface style={{ ...styles.card, ...(isLastSurface && styles.lastSurface) }} elevation={5}>
         <List.Accordion
-          id={patientPlan._id}
+          id={patientPlan.uuid}
           title={`${new Date(patientPlan.assignedDate).toDateString()}`}
           style={{ ...styles.accordion }}
           titleStyle={{ width: 300, fontWeight: 'bold', color: '#84e0d2' }}

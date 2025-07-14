@@ -2,7 +2,7 @@ import { PatientPlanTypeDates } from 'src/modules/patient-plans/adapters/out/enu
 import { GetRecordsBody, Meal, MetadataRecords } from 'src/shared/types/types';
 
 export type Plan = {
-  _id: string;
+  uuid: string;
   title?: string;
   week: number;
   day: number;

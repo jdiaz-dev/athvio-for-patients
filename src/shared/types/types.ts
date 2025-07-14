@@ -58,7 +58,7 @@ export type MealBasicInfo = {
 };
 
 export type MealDetails = {
-  _id: string;
+  uuid: string;
   ingredientDetails: IngredientDetail[];
   cookingInstructions: string;
   macros: Macros;
