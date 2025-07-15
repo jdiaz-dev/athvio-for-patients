@@ -11,6 +11,7 @@ export const PATIENT_PLAN_FOR_MOBILE = gql`
         position
         mealTag
         name
+        image
         ingredientDetails {
           ingredientType
           customIngredient {

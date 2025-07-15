@@ -62,6 +62,7 @@ export type MealDetails = {
   ingredientDetails: IngredientDetail[];
   cookingInstructions: string;
   macros: Macros;
+  image: string | null;
 };
 
 export interface Meal extends MealBasicInfo, MealDetails {}

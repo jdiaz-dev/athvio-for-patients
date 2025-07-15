@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { List, Surface } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { PatientPlanBody } from 'src/modules/patient-plans/adapters/out/patient-plan';
@@ -30,7 +30,15 @@ function PatientPlanItem({ patientPlan, index }: { patientPlan: PatientPlanBody;
             patientPlan.meals.map((meal, index1) => {
               return (
                 <>
-                  <List.Item title={meal.mealTag} key={index1} titleStyle={{ color: 'white' }} />
+                  <List.Item
+                    title={() => (
+                      <Text style={styles.wrappedTitleText} numberOfLines={0}>
+                        {`${meal.mealTag} - ${meal.name}`}
+                      </Text>
+                    )}
+                    key={index1}
+                    titleStyle={{ color: 'white' }}
+                  />
                   {meal.ingredientDetails.map((ingredientDetail, index2) => {
                     const ingredientAmount =
                       ingredientDetail.ingredientType === IngredientType.UNIQUE_INGREDIENT
@@ -48,9 +56,18 @@ function PatientPlanItem({ patientPlan, index }: { patientPlan: PatientPlanBody;
                       <Text style={styles.text} key={index2}>{`${ingredientAmount} ${ingredientLabel} ${ingredientName}`}</Text>
                     );
                   })}
+                  <br />
                   <Text
                     style={styles.text}
-                  >{`${meal.cookingInstructions.length ? 'Directions:' : ''} ${meal.cookingInstructions}`}</Text>
+                  >{`${meal.cookingInstructions.length ? 'Instrucciones:' : ''} ${meal.cookingInstructions}`}</Text>
+                  <Image
+                    source={{
+                      uri: meal.image as string,
+                    }}
+                    style={{
+                      height: 180,
+                    }}
+                  />
                 </>
               );
             })}
@@ -61,7 +78,15 @@ function PatientPlanItem({ patientPlan, index }: { patientPlan: PatientPlanBody;
 
             return (
               <>
-                <List.Item titleStyle={{ color: 'white' }} style={{ ...(isLastItem && styles.lastItem) }} title={meal.mealTag} />
+                <List.Item
+                  titleStyle={{ color: 'white' }}
+                  style={{ ...(isLastItem && styles.lastItem), padding: 5 }}
+                  title={() => (
+                    <Text style={styles.wrappedTitleText} numberOfLines={0}>
+                      {`${meal.mealTag} - ${meal.name}`}
+                    </Text>
+                  )}
+                />
               </>
             );
           })}
@@ -85,10 +110,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#323232',
   },
   text: {
-    margin: 'auto',
-    paddingLeft: 25,
-    width: 300,
     color: 'white',
+    flexWrap: 'wrap',
+    flex: 1,
+    width: '100%',
+    paddingLeft: '3%',
+    paddingRight: '3%',
   },
 
   lastItem: {
@@ -97,5 +124,17 @@ const styles = StyleSheet.create({
   },
   lastSurface: {
     marginBottom: 36,
+  },
+  /*  wrappedText: {
+    color: 'white',
+    flexWrap: 'wrap',
+    flexShrink: 1,
+    flex: 1,
+  }, */
+  wrappedTitleText: {
+    color: 'white',
+    flexWrap: 'wrap',
+    flex: 1,
+    width: '100%',
   },
 });

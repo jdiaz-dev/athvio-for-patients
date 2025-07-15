@@ -69,22 +69,22 @@ function Navigation({ navigation }: NavigationProps) {
           tabBarIcon: ({ color, size }) => <Icon name="food" size={size} color={color} />,
         }}
       />
-      {/* <Tab.Screen
+      <Tab.Screen
         name="PatientPlanList"
         component={PatientPlanList}
         options={{
           tabBarLabel: 'Plans',
           tabBarIcon: ({ color, size }) => <Icon name="home" size={size} color={color} />,
         }}
-      /> */}
-      {/* <Tab.Screen
+      />
+      <Tab.Screen
         name="Chat"
         component={ChatScreen}
         options={{
           tabBarLabel: 'Chat',
           tabBarIcon: ({ color, size }) => <Icon name="chat" size={size} color={color} />,
         }}
-      /> */}
+      />
       <Tab.Screen
         name="Account"
         component={Account}
