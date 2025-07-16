@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text } from 'react-native';
 import { List, Surface } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { PatientPlanBody } from 'src/modules/patient-plans/adapters/out/patient-plan';
@@ -19,7 +19,12 @@ function PatientPlanItem({ patientPlan, index }: { patientPlan: PatientPlanBody;
       <Surface style={{ ...styles.card, ...(isLastSurface && styles.lastSurface) }} elevation={5}>
         <List.Accordion
           id={patientPlan.uuid}
-          title={`${new Date(patientPlan.assignedDate).toDateString()}`}
+          title={`${new Date(patientPlan.assignedDate).toLocaleDateString('es-ES', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}`}
           style={{ ...styles.accordion }}
           titleStyle={{ width: 300, fontWeight: 'bold', color: '#84e0d2' }}
           expanded={expanded}
@@ -75,12 +80,11 @@ function PatientPlanItem({ patientPlan, index }: { patientPlan: PatientPlanBody;
         {!expanded &&
           patientPlan.meals.map((meal, indexMeal) => {
             const isLastItem = indexMeal === patientPlan.meals.length - 1;
-
             return (
               <>
                 <List.Item
                   titleStyle={{ color: 'white' }}
-                  style={{ ...(isLastItem && styles.lastItem), padding: 5 }}
+                  style={{ ...(isLastItem && styles.lastItem), padding: '1%' }}
                   title={() => (
                     <Text style={styles.wrappedTitleText} numberOfLines={0}>
                       {`${meal.mealTag} - ${meal.name}`}
@@ -107,17 +111,16 @@ const styles = StyleSheet.create({
   accordion: {
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
-    backgroundColor: '#323232',
+    backgroundColor: '#2c9687',
   },
   text: {
     color: 'white',
     flexWrap: 'wrap',
     flex: 1,
     width: '100%',
-    paddingLeft: '3%',
-    paddingRight: '3%',
+    paddingLeft: '4%',
+    paddingRight: '4%',
   },
-
   lastItem: {
     borderBottomLeftRadius: 6,
     borderBottomRightRadius: 6,
@@ -125,12 +128,6 @@ const styles = StyleSheet.create({
   lastSurface: {
     marginBottom: 36,
   },
-  /*  wrappedText: {
-    color: 'white',
-    flexWrap: 'wrap',
-    flexShrink: 1,
-    flex: 1,
-  }, */
   wrappedTitleText: {
     color: 'white',
     flexWrap: 'wrap',
