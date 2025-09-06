@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, StyleSheet, Text } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { List, Surface } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { PatientPlanBody } from 'src/modules/patient-plans/adapters/out/patient-plan';
@@ -61,7 +61,7 @@ function PatientPlanItem({ patientPlan, index }: { patientPlan: PatientPlanBody;
                       <Text style={styles.text} key={index2}>{`${ingredientAmount} ${ingredientLabel} ${ingredientName}`}</Text>
                     );
                   })}
-                  <br />
+                  <View style={{ height: 10 }} />
                   <Text
                     style={styles.text}
                   >{`${meal.cookingInstructions.length ? 'Instrucciones:' : ''} ${meal.cookingInstructions}`}</Text>

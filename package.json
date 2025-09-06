@@ -14,7 +14,6 @@
     "format": "npx prettier --write .",
     "build:config": "eas build:configure",
     "build:dev": "eas build --platform android --profile preview",
-    "build:dev1": "eas build --platform web --profile preview",
     "build:pre": "eas build --platform android",
     "build:prod:web": "[ -f .env.local ] && mv .env.local .env.local.bak || true && expo export --clear --platform web",
     "sync:prod": "aws s3 sync dist/ s3://anticancer-meals.com"
