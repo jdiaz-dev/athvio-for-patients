@@ -74,9 +74,26 @@ const ProgramItem = () => {
 
   // Custom renderer for date numbers using renderCustomDateForMonth
   const renderCustomDate = (date: Date) => {
+    // Get the first day of the displayed month
+    const firstDayOfMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1);
+
+    // Get what day of week the month starts on (0=Sunday, 6=Saturday)
+    // We need to adjust for weekStartsOn={1} (Monday)
+    let firstDayWeekday = firstDayOfMonth.getDay();
+    // Convert Sunday=0 to Sunday=6, and shift everything so Monday=0
+    firstDayWeekday = firstDayWeekday === 0 ? 6 : firstDayWeekday - 1;
+
+    // Calculate the cell number (1-based)
+    // For dates before the first day of month
+    const diffTime = date.getTime() - firstDayOfMonth.getTime();
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+    // Cell number is: days from previous month + day of current/next month
+    const cellNumber = firstDayWeekday + diffDays + 1;
+
     return (
       <View style={styles.customDateContainer}>
-        <Text style={styles.customDateText}>{'>_<'}</Text>
+        <Text style={styles.customDateText}>{cellNumber}</Text>
       </View>
     );
   };
