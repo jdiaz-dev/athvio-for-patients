@@ -43,7 +43,7 @@ function NutritionalMealList() {
 
   return (
     <>
-      <View style={styles.tabsWrapper}>
+      <View style={styles.container}>
         <TouchableOpacity onPress={scrollLeft}>
           <Ionicons name="chevron-back-circle-outline" size={24} color="white" />
         </TouchableOpacity>
@@ -52,7 +52,7 @@ function NutritionalMealList() {
           horizontal
           showsHorizontalScrollIndicator={false}
           ref={scrollRef}
-          contentContainerStyle={styles.tabsContainer}
+          contentContainerStyle={styles.scrollViewContainer}
         >
           {CATEGORIES.map((category) => {
             const isActive = selectedCategory === category;
@@ -79,7 +79,7 @@ function NutritionalMealList() {
           renderItem={renderItem}
           keyExtractor={(item) => item.uuid}
           showsVerticalScrollIndicator={false}
-          style={styles.container}
+          style={styles.flatList}
         />
       </View>
 
@@ -92,18 +92,18 @@ export default NutritionalMealList;
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 16,
-    paddingVertical: 20,
-    backgroundColor: '#121212',
-  },
-  tabsWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#2c9687',
     paddingHorizontal: 10,
     paddingVertical: 10,
   },
-  tabsContainer: {
+  flatList: {
+    paddingHorizontal: 16,
+    paddingVertical: 20,
+    backgroundColor: '#121212',
+  },
+  scrollViewContainer: {
     flexDirection: 'row',
     alignItems: 'center',
   },

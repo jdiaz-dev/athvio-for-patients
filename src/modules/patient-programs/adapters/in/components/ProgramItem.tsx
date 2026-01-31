@@ -25,7 +25,9 @@ const ProgramItem = () => {
       </TouchableOpacity>
     );
   };
+
   const [date, setDate] = useState(new Date());
+
   const events: CalendarEvent[] = [
     {
       title: 'Nutrition Consultation',
@@ -38,6 +40,7 @@ const ProgramItem = () => {
       end: new Date(new Date().setHours(15, 0, 0, 0)),
     },
   ];
+
   const renderHeader = (currentDate: Date) => {
     console.log('-----currentDate', currentDate);
     const goPrev = () => {
@@ -57,17 +60,27 @@ const ProgramItem = () => {
     return (
       <View style={styles.header}>
         <TouchableOpacity onPress={goPrev}>
-          <Text style={styles.nav}>{'<'}</Text>
+          <Text style={styles.nav}>{'<<<<'}</Text>
         </TouchableOpacity>
 
         <Text style={styles.title}>{formatMonth(currentDate)}</Text>
 
         <TouchableOpacity onPress={goNext}>
-          <Text style={styles.nav}>{'>'}</Text>
+          <Text style={styles.nav}>{'>>>>'}</Text>
         </TouchableOpacity>
       </View>
     );
   };
+
+  // Custom renderer for date numbers using renderCustomDateForMonth
+  const renderCustomDate = (date: Date) => {
+    return (
+      <View style={styles.customDateContainer}>
+        <Text style={styles.customDateText}>{'>_<'}</Text>
+      </View>
+    );
+  };
+
   return (
     <ScrollView style={{ width: '100%' }}>
       <View style={styles.container}>
@@ -107,12 +120,11 @@ const ProgramItem = () => {
             date={selectedDate}
             swipeEnabled={false}
             showTime={false}
-            show
             renderEvent={renderEvent}
             renderHeader={renderHeader}
+            renderCustomDateForMonth={renderCustomDate}
             weekStartsOn={1} // Start week on Monday
             hideNowIndicator
-            calendarCellTextStyle={{ color: 'white' }}
             // renderHeaderForMonthView={() => <View>{4556}</View>}
             bodyContainerStyle={{ borderTopWidth: 1, width: '100%' }}
             // verticalScrollEnabled={true}
@@ -260,7 +272,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textAlign: 'center',
   },
-
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -277,6 +288,17 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  // Custom date rendering styles
+  customDateContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  customDateText: {
+    color: '#ffffff',
+    fontSize: 14,
+    fontWeight: '600',
   },
 });
 
