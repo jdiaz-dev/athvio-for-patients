@@ -3,6 +3,7 @@ import { AuthInitialState } from 'src/modules/auth/adapters/out/auth';
 import { ChatInitialState } from 'src/modules/chat/adapters/out/chat';
 import { NutritionalMealsInitialState } from 'src/modules/nutritional-meals/adapters/out/nutritional-meals';
 import { PatientPlanInitialState } from 'src/modules/patient-plans/adapters/out/patient-plan';
+import { PatientProgramsInitialState } from 'src/modules/patient-programs/adapters/out/patient-program';
 import { IngredientType } from 'src/shared/constants';
 
 export interface Macros {
@@ -71,6 +72,7 @@ export type ReduxStates = {
   chat: ChatInitialState;
   patientPlans: PatientPlanInitialState;
   nutritionalMeals: NutritionalMealsInitialState;
+  patientPrograms: PatientProgramsInitialState;
   auth: AuthInitialState;
 };
 
