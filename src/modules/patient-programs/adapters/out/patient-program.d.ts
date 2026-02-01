@@ -16,6 +16,7 @@ type Plan = {
 };
 
 export type PatientProgram = {
+  uuid: string;
   professional: string;
   name: string;
   description: string;

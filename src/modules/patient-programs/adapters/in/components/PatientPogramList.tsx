@@ -1,17 +1,20 @@
 import React, { useContext, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { FlatList, ListRenderItem, StyleSheet, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { AuthContext } from 'src/modules/auth/adapters/in/context/AuthContext';
-import ProgramItem from 'src/modules/patient-programs/adapters/in/components/PatientProgramItem';
+import PatientProgramItem from 'src/modules/patient-programs/adapters/in/components/PatientProgramItem';
+import { PatientProgram } from 'src/modules/patient-programs/adapters/out/patient-program.d';
 import { usePatientPrograms } from 'src/modules/patient-programs/adapters/out/PatientProgramsActions';
 import { ReduxStates } from 'src/shared/types/types';
+
+const renderItem: ListRenderItem<PatientProgram> = ({ item, index }) => (
+  <PatientProgramItem patientProgram={item} index={index} />
+);
 
 function PatientProgramList() {
   const { assignedProfessional } = useContext(AuthContext);
   const { getPatientPrograms } = usePatientPrograms();
   const { data: patientProgramsState, error } = useSelector((state: ReduxStates) => state.patientPrograms.patientPrograms);
-  console.log('assignedProfessional', assignedProfessional);
-  console.log('patientProgramsState', patientProgramsState);
 
   useEffect(() => {
     const fetchPatientPrograms = async () => {
@@ -26,11 +29,21 @@ function PatientProgramList() {
     };
     fetchPatientPrograms();
   }, [assignedProfessional]);
+
   return (
     <>
       <View style={styles.container}>
         PatientProgramList
-        <ProgramItem />
+      </View>
+
+      <View style={{ flex: 1 }}>
+        <FlatList
+          data={patientProgramsState || []}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.uuid}
+          showsVerticalScrollIndicator={false}
+          style={styles.flatList}
+        />
       </View>
     </>
   );
@@ -46,5 +59,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#2c9687',
     paddingHorizontal: 10,
     paddingVertical: 10,
+  },
+  flatList: {
+    paddingHorizontal: 16,
+    paddingVertical: 20,
+    backgroundColor: '#121212',
   },
 });

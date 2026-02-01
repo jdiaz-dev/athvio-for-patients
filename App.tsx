@@ -145,3 +145,4 @@ const styles = StyleSheet.create({
     height: 35,
   },
 });
+/* stayed: create a path(screen) to see program patient detail */
