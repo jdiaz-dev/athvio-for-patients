@@ -11,6 +11,7 @@ import Account from 'src/modules/account/in/Account';
 import PatientPlanList from 'src/modules/patient-plans/adapters/in/components/PatientPlanList';
 import NutritionalMealList from 'src/modules/nutritional-meals/adapters/in/components/NutritionalMealList';
 import PatientPogramList from 'src/modules/patient-programs/adapters/in/components/PatientPogramList';
+import ProgramsNavigator from 'src/modules/patient-programs/adapters/in/components/ProgramNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -64,7 +65,8 @@ function Navigation({ navigation }: NavigationProps) {
     >
       <Tab.Screen
         name="Programs"
-        component={PatientPogramList}
+        // component={PatientPogramList}
+        component={ProgramsNavigator}
         options={{
           tabBarLabel: 'Programas',
           tabBarIcon: ({ color, size }) => <Icon name="food" size={size} color={color} />,

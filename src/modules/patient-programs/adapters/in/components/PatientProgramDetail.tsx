@@ -1,8 +1,20 @@
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useState, useMemo, useRef } from 'react';
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Dimensions, Image } from 'react-native';
 import { Calendar, CalendarTouchableOpacityProps, ICalendarEventBase, CalendarEvent } from 'react-native-big-calendar';
+import { useSelector } from 'react-redux';
+import { ProgramsStackParamList } from 'src/modules/patient-programs/adapters/in/components/ProgramNavigator';
+import { PatientProgram } from 'src/modules/patient-programs/adapters/out/patient-program';
+import { ReduxStates } from 'src/shared/types/types';
 
-const PatientProgramDetail = () => {
+type Props = NativeStackScreenProps<ProgramsStackParamList, 'PatientProgramDetail'>;
+
+const PatientProgramDetail = ({ route }: Props) => {
+  const { patientProgram } = route.params;
+  const { data: patientProgramsState, error } = useSelector((state: ReduxStates) => state.patientPrograms.patientPrograms);
+  const plan = patientProgramsState.find((pp) => pp.uuid === patientProgram);
+  console.log('-----plan', plan?.plans);
+
   const [selectedPeriod, setSelectedPeriod] = useState('4weeks');
   const [selectedDate, setSelectedDate] = useState(new Date());
   const scrollRef = useRef<ScrollView>(null);
@@ -137,7 +149,7 @@ const PatientProgramDetail = () => {
             swipeEnabled={false}
             showTime={false}
             renderEvent={renderEvent}
-            renderHeader={renderHeader}
+            // renderHeader={renderHeader}
             renderCustomDateForMonth={renderCustomDate}
             weekStartsOn={1} // Start week on Monday
             hideNowIndicator
@@ -335,5 +347,3 @@ const styles2 = StyleSheet.create({
     color: '#666',
   }, */
 });
-
-

@@ -6,13 +6,21 @@ import { ReduxStates } from 'src/shared/types/types';
 import { PatientProgram } from 'src/modules/patient-programs/adapters/out/patient-program';
 import PatientProgramDetail from 'src/modules/patient-programs/adapters/in/components/PatientProgramDetail';
 
-function PatientProgramItem({ patientProgram, index }: { patientProgram: PatientProgram; index: number }) {
+function PatientProgramItem({
+  patientProgram,
+  index,
+  onPress,
+}: {
+  patientProgram: PatientProgram;
+  index: number;
+  onPress: () => void;
+}) {
   const { data: patientPlansState } = useSelector((state: ReduxStates) => state.patientPlans.patientPlans);
   const handlePress = () => {};
 
   return (
     <>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={onPress}>
         <Surface style={{ ...styles.card }} elevation={5}>
           <View style={styles.program}>{patientProgram.name}</View>
         </Surface>
