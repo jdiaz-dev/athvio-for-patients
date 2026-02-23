@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useState, useMemo, useRef } from 'react';
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Dimensions, Image } from 'react-native';
-import { Calendar, CalendarTouchableOpacityProps, ICalendarEventBase, CalendarEvent } from 'react-native-big-calendar';
+import { Calendar, CalendarTouchableOpacityProps, ICalendarEventBase } from 'react-native-big-calendar';
 import { useSelector } from 'react-redux';
 import { ProgramsStackParamList } from 'src/modules/patient-programs/adapters/in/components/ProgramNavigator';
 import { PatientProgram } from 'src/modules/patient-programs/adapters/out/patient-program';
@@ -13,6 +13,7 @@ const PatientProgramDetail = ({ route }: Props) => {
   const { patientProgram } = route.params;
   const { data: patientProgramsState, error } = useSelector((state: ReduxStates) => state.patientPrograms.patientPrograms);
   const plan = patientProgramsState.find((pp) => pp.uuid === patientProgram);
+  console.log('-----patientProgramsState', patientProgramsState);
   console.log('-----plan', plan?.plans);
 
   const [selectedPeriod, setSelectedPeriod] = useState('4weeks');
@@ -26,20 +27,33 @@ const PatientProgramDetail = ({ route }: Props) => {
     { id: '4weeks', label: '4 Weeks' },
   ];
 
+  const events: ICalendarEventBase[] = useMemo(() => {
+    if (!plan?.plans) return [];
+
+    return plan.plans.map((p) => ({
+      title: p.uuid, // 👈 renders the uuid as the event title
+      start: new Date(), // adjust field names to match your type
+      end: new Date(),
+    }));
+  }, [plan]);
+
   const scrollLeft = () => scrollRef.current?.scrollTo({ x: 0, animated: true });
   const scrollRight = () => scrollRef.current?.scrollToEnd({ animated: true });
 
   const renderEvent = <T extends ICalendarEventBase>(event: T, touchableOpacityProps: CalendarTouchableOpacityProps) => {
+    console.log('-----event', event);
     return (
       <TouchableOpacity {...touchableOpacityProps}>
-        <View style={styles.dayCellPlaceholder}>{`My custom event: ${event.title} with a color: ${event.color}`}</View>
+        <View style={styles.dayCellPlaceholder}>
+          <Text style={{ color: '#fff', fontSize: 10 }}>{event.title}</Text> {/* uuid shown here */}
+        </View>
       </TouchableOpacity>
     );
   };
 
   const [date, setDate] = useState(new Date());
 
-  const events: CalendarEvent[] = [
+  /* const events: CalendarEvent[] = [
     {
       title: 'Nutrition Consultation',
       start: new Date(new Date().setHours(10, 0, 0, 0)),
@@ -50,7 +64,7 @@ const PatientProgramDetail = ({ route }: Props) => {
       start: new Date(new Date().setHours(14, 0, 0, 0)),
       end: new Date(new Date().setHours(15, 0, 0, 0)),
     },
-  ];
+  ]; */
 
   const renderHeader = (currentDate: Date) => {
     console.log('-----currentDate', currentDate);

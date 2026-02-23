@@ -9,6 +9,7 @@ export type GetPatientProgramsRequest = {
 };
 
 type Plan = {
+  uuid: string;
   title: string;
   week: number;
   day: number;
