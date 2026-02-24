@@ -69,7 +69,7 @@ export default function App() {
                     </PublicRoute>
                   )}
                 />
-                <Stack.Screen
+                {/* <Stack.Screen
                   name="SignUp"
                   options={() => ({
                     headerShown: false,
@@ -86,7 +86,7 @@ export default function App() {
                       <SignUp />
                     </PublicRoute>
                   )}
-                />
+                /> */}
                 <Stack.Screen
                   name="SignIn"
                   options={() => ({

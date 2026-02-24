@@ -25,7 +25,7 @@ function SignIn() {
   return (
     <View style={formStyles.container}>
       {/* <TitleApp /> */}
-      <Text style={formStyles.title}>Sign In</Text>
+      <Text style={formStyles.title}>Athvio</Text>
 
       <Formik
         initialValues={{ email: '', password: '', submit: null }}
@@ -69,16 +69,16 @@ function SignIn() {
               {errors.submit}
             </HelperText>
             <Button style={formStyles.button} onPress={handleSubmit} mode="contained" buttonColor="#2c9687">
-              Log in
+              Iniciar sesión
             </Button>
           </>
         )}
       </Formik>
-      <TouchableOpacity>
+      {/* <TouchableOpacity>
         <Text style={formStyles.link} onPress={() => navigation.navigate('SignUp')}>
           Don't have an account? Sign up
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 }
