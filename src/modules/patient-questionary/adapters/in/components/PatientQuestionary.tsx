@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Platform } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import {
   PatientQuestionaryDetail,
@@ -11,12 +12,6 @@ import { ReduxStates } from 'src/shared/types/types';
 
 const QUESTIONS_PER_PAGE = 5;
 
-function getQueryParam(name: string): string | null {
-  if (Platform.OS !== 'web') return null;
-  const url = new URL(window.location.href);
-  return url.searchParams.get(name);
-}
-
 function PatientQuestionary() {
   const { getQuestionaryForPatient } = usePatientQuestionary();
 
@@ -26,17 +21,19 @@ function PatientQuestionary() {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [currentGroupIndex, setCurrentGroupIndex] = useState(0);
   const [currentPageInGroup, setCurrentPageInGroup] = useState(0);
+  const route = useRoute();
 
   useEffect(() => {
-    const patient = getQueryParam('patient');
-    const professional = getQueryParam('professional');
-    const patientQuestionaryParam = getQueryParam('patientQuestionary');
-    console.log('Query params:', { patient, professional, patientQuestionaryParam });
-    if (patient && professional && patientQuestionaryParam) {
+    const { patient, professional, patientQuestionary } = route.params as {
+      patient: string;
+      professional: string;
+      patientQuestionary: string;
+    };
+    if (patient && professional && patientQuestionary) {
       getQuestionaryForPatient({
         patient,
         professional,
-        patientQuestionary: patientQuestionaryParam,
+        patientQuestionary,
       });
     }
   }, []);
