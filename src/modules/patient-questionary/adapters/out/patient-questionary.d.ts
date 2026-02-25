@@ -23,6 +23,7 @@ export type PatientQuestionaryBody = {
 export type GetPatientQuestionaryBody = {
   patientQuestionary: string;
   patient: string;
+  professional: string;
 };
 
 export type GetPatientQuestionaryRequest = {
@@ -30,5 +31,27 @@ export type GetPatientQuestionaryRequest = {
 };
 
 export type GetPatientQuestionaryResponse = {
-  getPatientQuestionary: PatientQuestionaryBody;
+  getQuestionaryForPatient: PatientQuestionaryBody;
+};
+
+export type PatientQuestionaryAnswersInput = {
+  questionaryDetail: string;
+  answer: string;
+};
+
+type PatientQuestionaryGroupWithAnswersInput = {
+  questionaryGroup: string;
+  questionaryDetails: PatientQuestionaryAnswersInput[];
+};
+
+export type UpdateAnswersInput = {
+  professional: string;
+  patient: string;
+  questionary: string;
+  questionaryGroups: PatientQuestionaryGroupWithAnswersInput[];
+};
+
+export type PatientQuestionaryInitialState = {
+  patientQuestionary: { data: PatientQuestionaryBody; error: string | null };
+  patientQuestionaryAnswers: { data: UpdateAnswersInput; error: string | null };
 };

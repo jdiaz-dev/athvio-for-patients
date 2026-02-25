@@ -14,6 +14,7 @@ import store from 'src/core/redux/configureStore';
 import { ScreenParamList } from 'src/shared/types/types';
 import SignUp from 'src/modules/auth/adapters/in/components/SignUp';
 import Frecuency from 'src/modules/frecuency/Frecuency';
+import PatientQuestionary from 'src/modules/patient-questionary/adapters/in/components/PatientQuestionary';
 
 const theme = {
   ...DefaultTheme,
@@ -32,6 +33,7 @@ const linking = {
     screens: {
       SignUp: 'signup',
       SignIn: 'signin',
+      Questionary: 'questionary',
       Navigation: {
         path: 'navigation/:tabTitle',
         parse: {
@@ -104,6 +106,20 @@ export default function App() {
                       <SignIn />
                     </PublicRoute>
                   )}
+                />
+                <Stack.Screen
+                  name="Questionary"
+                  options={() => ({
+                    headerShown: false,
+                    headerLeft: () => null,
+                    headerTitleStyle: {
+                      ...styles.headerTitleStyle,
+                    },
+                    headerStyle: {
+                      ...styles.headerStyle,
+                    },
+                  })}
+                  component={() => <PatientQuestionary />}
                 />
                 <Stack.Screen
                   name="Navigation"

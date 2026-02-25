@@ -4,6 +4,7 @@ import { ChatInitialState } from 'src/modules/chat/adapters/out/chat';
 import { NutritionalMealsInitialState } from 'src/modules/nutritional-meals/adapters/out/nutritional-meals';
 import { PatientPlanInitialState } from 'src/modules/patient-plans/adapters/out/patient-plan';
 import { PatientProgramsInitialState } from 'src/modules/patient-programs/adapters/out/patient-program';
+import { PatientQuestionaryInitialState } from 'src/modules/patient-questionary/adapters/out/patient-questionary';
 import { IngredientType } from 'src/shared/constants';
 
 export interface Macros {
@@ -74,11 +75,13 @@ export type ReduxStates = {
   nutritionalMeals: NutritionalMealsInitialState;
   patientPrograms: PatientProgramsInitialState;
   auth: AuthInitialState;
+  patientQuestionary: PatientQuestionaryInitialState;
 };
 
 export type ScreenParamList = {
   SignIn: undefined;
   SignUp: undefined;
+  Questionary: undefined;
   Navigation: { tabTitle: string };
 };
 export type SignInScreenNavigationProp = NativeStackNavigationProp<ScreenParamList, 'SignIn'>;
