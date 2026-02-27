@@ -22,13 +22,12 @@ function PatientQuestionary() {
   const [currentGroupIndex, setCurrentGroupIndex] = useState(0);
   const [localAnswers, setLocalAnswers] = useState<Record<string, string>>({});
   const route = useRoute();
-
+  const { patient, professional, patientQuestionary } = route.params as {
+    patient: string;
+    professional: string;
+    patientQuestionary: string;
+  };
   useEffect(() => {
-    const { patient, professional, patientQuestionary } = route.params as {
-      patient: string;
-      professional: string;
-      patientQuestionary: string;
-    };
     if (patient && professional && patientQuestionary) {
       getQuestionaryForPatient({ patient, professional, patientQuestionary });
     }
@@ -82,17 +81,17 @@ function PatientQuestionary() {
   const isLastGroup = currentGroupIndex >= groups.length - 1;
   const canGoBack = currentGroupIndex > 0;
 
-  const handleContinuar = () => {
+  const handleContinueOrFinalize = () => {
     dispatchGroupAnswers(currentGroup);
     if (!isLastGroup) {
       setCurrentGroupIndex((g) => g + 1);
       setLocalAnswers({});
     } else {
-      handleFinalizar();
+      handleFinalize();
     }
   };
 
-  const handleRetroceder = () => {
+  const handleGoBack = () => {
     if (currentGroupIndex > 0) {
       dispatchGroupAnswers(currentGroup);
       setCurrentGroupIndex((g) => g - 1);
@@ -100,13 +99,7 @@ function PatientQuestionary() {
     }
   };
 
-  const handleFinalizar = () => {
-    const { patient, professional, patientQuestionary } = route.params as {
-      patient: string;
-      professional: string;
-      patientQuestionary: string;
-    };
-
+  const handleFinalize = async () => {
     const payload: UpdateAnswersInput = {
       professional,
       patient,
@@ -117,12 +110,12 @@ function PatientQuestionary() {
           questionaryGroup: group.uuid,
           questionaryDetails: group.questionaryDetails.map((detail) => ({
             questionaryDetail: detail.uuid,
-            answer: detail.answer ?? '',
+            answer: detail.answer,
           })),
         })),
     };
 
-    updatePatientQuestionaryAnswers(payload);
+    await updatePatientQuestionaryAnswers(payload);
   };
 
   return (
@@ -148,13 +141,13 @@ function PatientQuestionary() {
 
           <View style={styles.buttonRow}>
             {canGoBack ? (
-              <TouchableOpacity style={styles.backButton} onPress={handleRetroceder}>
+              <TouchableOpacity style={styles.backButton} onPress={handleGoBack}>
                 <Text style={styles.backButtonText}>Retroceder</Text>
               </TouchableOpacity>
             ) : (
               <View style={styles.buttonPlaceholder} />
             )}
-            <TouchableOpacity style={styles.continueButton} onPress={handleContinuar}>
+            <TouchableOpacity style={styles.continueButton} onPress={handleContinueOrFinalize}>
               <Text style={styles.continueButtonText}>{isLastGroup ? 'Finalizar' : 'Continuar'}</Text>
             </TouchableOpacity>
           </View>
