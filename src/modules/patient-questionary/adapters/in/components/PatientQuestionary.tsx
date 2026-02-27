@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Platform } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   PatientQuestionaryDetail,
@@ -22,6 +22,7 @@ function PatientQuestionary() {
   const [currentGroupIndex, setCurrentGroupIndex] = useState(0);
   const [localAnswers, setLocalAnswers] = useState<Record<string, string>>({});
   const route = useRoute();
+  const navigation = useNavigation();
   const { patient, professional, patientQuestionary } = route.params as {
     patient: string;
     professional: string;
@@ -115,7 +116,8 @@ function PatientQuestionary() {
         })),
     };
 
-    await updatePatientQuestionaryAnswers(payload);
+    updatePatientQuestionaryAnswers(payload);
+    navigation.navigate('PatientQuestionarySuccess' as never);
   };
 
   return (

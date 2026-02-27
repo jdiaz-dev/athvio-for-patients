@@ -15,6 +15,7 @@ import { ScreenParamList } from 'src/shared/types/types';
 import SignUp from 'src/modules/auth/adapters/in/components/SignUp';
 import Frecuency from 'src/modules/frecuency/Frecuency';
 import PatientQuestionary from 'src/modules/patient-questionary/adapters/in/components/PatientQuestionary';
+import PatientQuestionarySuccess from 'src/modules/patient-questionary/adapters/in/components/PatientQuestionarySucess';
 
 const theme = {
   ...DefaultTheme,
@@ -120,6 +121,20 @@ export default function App() {
                     },
                   })}
                   component={() => <PatientQuestionary />}
+                />
+                <Stack.Screen
+                  name="PatientQuestionarySuccess"
+                  options={() => ({
+                    headerShown: false,
+                    headerLeft: () => null,
+                    headerTitleStyle: {
+                      ...styles.headerTitleStyle,
+                    },
+                    headerStyle: {
+                      ...styles.headerStyle,
+                    },
+                  })}
+                  component={() => <PatientQuestionarySuccess />}
                 />
                 <Stack.Screen
                   name="Navigation"

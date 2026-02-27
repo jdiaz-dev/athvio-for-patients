@@ -82,6 +82,7 @@ export type ScreenParamList = {
   SignIn: undefined;
   SignUp: undefined;
   Questionary: undefined;
+  PatientQuestionarySuccess: undefined;
   Navigation: { tabTitle: string };
 };
 export type SignInScreenNavigationProp = NativeStackNavigationProp<ScreenParamList, 'SignIn'>;
