@@ -16,7 +16,7 @@
     "build:dev": "eas build --platform android --profile preview",
     "build:pre": "eas build --platform android",
     "build:prod:web": "[ -f .env.local ] && mv .env.local .env.local.bak || true && expo export --clear --platform web",
-    "sync:prod": "aws s3 sync dist/ s3://anticancer-meals.com"
+    "sync:prod": "aws s3 sync dist/ s3://patient.athvio.com"
   },
   "dependencies": {
     "@apollo/client": "^3.8.10",
