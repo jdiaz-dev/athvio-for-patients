@@ -10,6 +10,19 @@ const patientQuestionarySlice = createSlice({
       state.data = action.payload;
       return state;
     },
+    savePatientQuestionaryDetail: (
+      state,
+      action: PayloadAction<{ questionaryGroup: string; patientQuestionaryDetail: string; answer: string }>,
+    ) => {
+      const group = state.data.questionaryGroups.find((group) => group.uuid === action.payload.questionaryGroup);
+      if (group) {
+        const detail = group.questionaryDetails.find((detail) => detail.uuid === action.payload.patientQuestionaryDetail);
+        if (detail) {
+          detail.answer = action.payload.answer;
+        }
+      }
+      return state;
+    },
     initializePatientQuestionaryError(state, action: PayloadAction<string>) {
       state.error = action.payload;
       return state;
@@ -17,27 +30,9 @@ const patientQuestionarySlice = createSlice({
   },
 });
 
-export const { initializePatientQuestionary, initializePatientQuestionaryError } = patientQuestionarySlice.actions;
-
-const patientQuestionaryAnswersSlice = createSlice({
-  name: 'patientQuestionaryAnswers',
-  initialState: patientQuestionaryInitialState.patientQuestionaryAnswers,
-  reducers: {
-    initializePatientQuestionaryAnswers: (state, action: PayloadAction<PatientQuestionaryBody>) => {
-      // state.data = action.payload;
-      return state;
-    },
-    initializePatientQuestionaryAnswersError(state, action: PayloadAction<string>) {
-      state.error = action.payload;
-      return state;
-    },
-  },
-});
-
-export const { initializePatientQuestionaryAnswers, initializePatientQuestionaryAnswersError } =
-  patientQuestionaryAnswersSlice.actions;
+export const { initializePatientQuestionary, savePatientQuestionaryDetail, initializePatientQuestionaryError } =
+  patientQuestionarySlice.actions;
 
 export default combineReducers({
   patientQuestionary: patientQuestionarySlice.reducer,
-  patientQuestionaryAnswers: patientQuestionaryAnswersSlice.reducer,
 });

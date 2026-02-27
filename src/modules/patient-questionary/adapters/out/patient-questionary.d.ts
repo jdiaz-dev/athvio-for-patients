@@ -51,7 +51,14 @@ export type UpdateAnswersInput = {
   questionaryGroups: PatientQuestionaryGroupWithAnswersInput[];
 };
 
+export type UpdatePatientQuestionaryAnswersRequest = {
+  input: UpdateAnswersInput;
+};
+
+export type UpdatePatientQuestionaryAnswersResponse = {
+  updatePatientQuestionaryAnswers: PatientQuestionaryBody;
+};
+
 export type PatientQuestionaryInitialState = {
   patientQuestionary: { data: PatientQuestionaryBody; error: string | null };
-  patientQuestionaryAnswers: { data: UpdateAnswersInput; error: string | null };
 };

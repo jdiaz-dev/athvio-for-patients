@@ -6,5 +6,4 @@ import {
 
 export const patientQuestionaryInitialState: PatientQuestionaryInitialState = {
   patientQuestionary: { data: {} as PatientQuestionaryBody, error: null },
-  patientQuestionaryAnswers: { data: {} as UpdateAnswersInput, error: null },
 };
