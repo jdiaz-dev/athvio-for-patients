@@ -10,7 +10,7 @@ const patientQuestionarySlice = createSlice({
       state.data = action.payload;
       return state;
     },
-    savePatientQuestionaryDetail: (
+    saveAnwser: (
       state,
       action: PayloadAction<{ questionaryGroup: string; patientQuestionaryDetail: string; answer: string }>,
     ) => {
@@ -30,8 +30,7 @@ const patientQuestionarySlice = createSlice({
   },
 });
 
-export const { initializePatientQuestionary, savePatientQuestionaryDetail, initializePatientQuestionaryError } =
-  patientQuestionarySlice.actions;
+export const { initializePatientQuestionary, saveAnwser, initializePatientQuestionaryError } = patientQuestionarySlice.actions;
 
 export default combineReducers({
   patientQuestionary: patientQuestionarySlice.reducer,

@@ -1,26 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView, StyleSheet, Platform } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   PatientQuestionaryDetail,
   PatientQuestionaryGroup,
 } from 'src/modules/patient-questionary/adapters/out/patient-questionary';
-
+import { saveAnwser } from 'src/modules/patient-questionary/adapters/in/slicers/PatientQuestionarySlice';
 import { usePatientQuestionary } from 'src/modules/patient-questionary/adapters/out/PatientQuestionaryActions';
 import { ReduxStates } from 'src/shared/types/types';
 
-const QUESTIONS_PER_PAGE = 5;
-
 function PatientQuestionary() {
+  const dispatch = useDispatch();
   const { getQuestionaryForPatient } = usePatientQuestionary();
 
   const { data: patientQuestionaryState, error } = useSelector(
     (state: ReduxStates) => state.patientQuestionary.patientQuestionary,
   );
-  const [answers, setAnswers] = useState<Record<string, string>>({});
+
   const [currentGroupIndex, setCurrentGroupIndex] = useState(0);
-  const [currentPageInGroup, setCurrentPageInGroup] = useState(0);
+  const [localAnswers, setLocalAnswers] = useState<Record<string, string>>({});
   const route = useRoute();
 
   useEffect(() => {
@@ -30,13 +29,28 @@ function PatientQuestionary() {
       patientQuestionary: string;
     };
     if (patient && professional && patientQuestionary) {
-      getQuestionaryForPatient({
-        patient,
-        professional,
-        patientQuestionary,
-      });
+      getQuestionaryForPatient({ patient, professional, patientQuestionary });
     }
   }, []);
+
+  const handleAnswerChange = (detailUuid: string, answer: string) => {
+    setLocalAnswers((prev) => ({ ...prev, [detailUuid]: answer }));
+  };
+
+  const dispatchGroupAnswers = (group: PatientQuestionaryGroup) => {
+    group.questionaryDetails.forEach((detail) => {
+      const answer = localAnswers[detail.uuid];
+      if (answer !== undefined) {
+        dispatch(
+          saveAnwser({
+            questionaryGroup: group.uuid,
+            patientQuestionaryDetail: detail.uuid,
+            answer,
+          }),
+        );
+      }
+    });
+  };
 
   if (error) {
     return (
@@ -64,39 +78,27 @@ function PatientQuestionary() {
   }
 
   const currentGroup: PatientQuestionaryGroup = groups[currentGroupIndex];
-  const allDetails: PatientQuestionaryDetail[] = currentGroup.questionaryDetails;
-  const totalPages = Math.ceil(allDetails.length / QUESTIONS_PER_PAGE);
-  const pageStart = currentPageInGroup * QUESTIONS_PER_PAGE;
-  const visibleDetails = allDetails.slice(pageStart, pageStart + QUESTIONS_PER_PAGE);
-
-  const isLastPageInGroup = currentPageInGroup >= totalPages - 1;
   const isLastGroup = currentGroupIndex >= groups.length - 1;
-  const isVeryLast = isLastPageInGroup && isLastGroup;
+  const canGoBack = currentGroupIndex > 0;
 
   const handleContinuar = () => {
-    if (!isLastPageInGroup) {
-      setCurrentPageInGroup((p) => p + 1);
-    } else if (!isLastGroup) {
+    dispatchGroupAnswers(currentGroup);
+    if (!isLastGroup) {
       setCurrentGroupIndex((g) => g + 1);
-      setCurrentPageInGroup(0);
+      setLocalAnswers({});
     } else {
-      // TODO: submit answers
-      console.log('Final answers:', answers);
+      // TODO: submit final answers
+      console.log('Finalizar');
     }
   };
 
   const handleRetroceder = () => {
-    if (currentPageInGroup > 0) {
-      setCurrentPageInGroup((p) => p - 1);
-    } else if (currentGroupIndex > 0) {
-      const prevGroup = groups[currentGroupIndex - 1];
-      const prevGroupTotalPages = Math.ceil(prevGroup.questionaryDetails.length / QUESTIONS_PER_PAGE);
+    if (currentGroupIndex > 0) {
+      dispatchGroupAnswers(currentGroup);
       setCurrentGroupIndex((g) => g - 1);
-      setCurrentPageInGroup(prevGroupTotalPages - 1);
+      setLocalAnswers({});
     }
   };
-
-  const canGoBack = currentGroupIndex > 0 || currentPageInGroup > 0;
 
   return (
     <View style={styles.outerContainer}>
@@ -105,15 +107,15 @@ function PatientQuestionary() {
           <Text style={styles.groupTitle}>{currentGroup.title}</Text>
           {currentGroup.description ? <Text style={styles.groupDescription}>{currentGroup.description}</Text> : null}
 
-          {visibleDetails.map((detail: PatientQuestionaryDetail) => (
+          {currentGroup.questionaryDetails.map((detail: PatientQuestionaryDetail) => (
             <View key={detail.uuid} style={styles.questionBlock}>
               <Text style={styles.questionLabel}>{detail.associatedQuestion}</Text>
               <TextInput
                 style={styles.input}
                 placeholder={detail.fieldName}
                 placeholderTextColor="#b0b8c1"
-                value={answers[detail.uuid] ?? detail.answer ?? ''}
-                onChangeText={(text) => setAnswers((prev) => ({ ...prev, [detail.uuid]: text }))}
+                value={localAnswers[detail.uuid] ?? detail.answer ?? ''}
+                onChangeText={(text) => handleAnswerChange(detail.uuid, text)}
                 multiline
               />
             </View>
@@ -128,7 +130,7 @@ function PatientQuestionary() {
               <View style={styles.buttonPlaceholder} />
             )}
             <TouchableOpacity style={styles.continueButton} onPress={handleContinuar}>
-              <Text style={styles.continueButtonText}>{isVeryLast ? 'Finalizar' : 'Continuar'}</Text>
+              <Text style={styles.continueButtonText}>{isLastGroup ? 'Finalizar' : 'Continuar'}</Text>
             </TouchableOpacity>
           </View>
         </View>
