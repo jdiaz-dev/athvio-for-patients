@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   PatientQuestionaryDetail,
   PatientQuestionaryGroup,
+  UpdateAnswersInput,
 } from 'src/modules/patient-questionary/adapters/out/patient-questionary';
 import { saveAnwser } from 'src/modules/patient-questionary/adapters/in/slicers/PatientQuestionarySlice';
 import { usePatientQuestionary } from 'src/modules/patient-questionary/adapters/out/PatientQuestionaryActions';
@@ -12,7 +13,7 @@ import { ReduxStates } from 'src/shared/types/types';
 
 function PatientQuestionary() {
   const dispatch = useDispatch();
-  const { getQuestionaryForPatient } = usePatientQuestionary();
+  const { getQuestionaryForPatient, updatePatientQuestionaryAnswers } = usePatientQuestionary();
 
   const { data: patientQuestionaryState, error } = useSelector(
     (state: ReduxStates) => state.patientQuestionary.patientQuestionary,
@@ -87,8 +88,7 @@ function PatientQuestionary() {
       setCurrentGroupIndex((g) => g + 1);
       setLocalAnswers({});
     } else {
-      // TODO: submit final answers
-      console.log('Finalizar');
+      handleFinalizar();
     }
   };
 
@@ -98,6 +98,31 @@ function PatientQuestionary() {
       setCurrentGroupIndex((g) => g - 1);
       setLocalAnswers({});
     }
+  };
+
+  const handleFinalizar = () => {
+    const { patient, professional, patientQuestionary } = route.params as {
+      patient: string;
+      professional: string;
+      patientQuestionary: string;
+    };
+
+    const payload: UpdateAnswersInput = {
+      professional,
+      patient,
+      questionary: patientQuestionaryState.uuid,
+      questionaryGroups: patientQuestionaryState.questionaryGroups
+        .filter((group) => group.questionaryDetails.length > 0)
+        .map((group) => ({
+          questionaryGroup: group.uuid,
+          questionaryDetails: group.questionaryDetails.map((detail) => ({
+            questionaryDetail: detail.uuid,
+            answer: detail.answer ?? '',
+          })),
+        })),
+    };
+
+    updatePatientQuestionaryAnswers(payload);
   };
 
   return (
