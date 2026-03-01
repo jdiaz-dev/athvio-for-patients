@@ -21,6 +21,7 @@ function PatientQuestionary() {
 
   const [currentGroupIndex, setCurrentGroupIndex] = useState(0);
   const [localAnswers, setLocalAnswers] = useState<Record<string, string>>({});
+  const [isFinalized, setIsFinalized] = useState<boolean>(false);
   const route = useRoute();
   const navigation = useNavigation();
   const { patient, professional, patientQuestionary } = route.params as {
@@ -34,24 +35,12 @@ function PatientQuestionary() {
     }
   }, []);
 
-  const handleAnswerChange = (detailUuid: string, answer: string) => {
-    setLocalAnswers((prev) => ({ ...prev, [detailUuid]: answer }));
-  };
-
-  const dispatchGroupAnswers = (group: PatientQuestionaryGroup) => {
-    group.questionaryDetails.forEach((detail) => {
-      const answer = localAnswers[detail.uuid];
-      if (answer !== undefined) {
-        dispatch(
-          saveAnwser({
-            questionaryGroup: group.uuid,
-            patientQuestionaryDetail: detail.uuid,
-            answer,
-          }),
-        );
-      }
-    });
-  };
+  useEffect(() => {
+    if (isFinalized) {
+      handleFinalize();
+      setIsFinalized(false);
+    }
+  }, [isFinalized]);
 
   if (error) {
     return (
@@ -82,13 +71,32 @@ function PatientQuestionary() {
   const isLastGroup = currentGroupIndex >= groups.length - 1;
   const canGoBack = currentGroupIndex > 0;
 
+  const handleAnswerChange = (detailUuid: string, answer: string) => {
+    setLocalAnswers((prev) => ({ ...prev, [detailUuid]: answer }));
+  };
+
+  const dispatchGroupAnswers = (group: PatientQuestionaryGroup) => {
+    group.questionaryDetails.forEach((detail) => {
+      const answer = localAnswers[detail.uuid];
+      if (answer !== undefined) {
+        dispatch(
+          saveAnwser({
+            questionaryGroup: group.uuid,
+            patientQuestionaryDetail: detail.uuid,
+            answer,
+          }),
+        );
+      }
+    });
+  };
+
   const handleContinueOrFinalize = () => {
     dispatchGroupAnswers(currentGroup);
     if (!isLastGroup) {
       setCurrentGroupIndex((g) => g + 1);
       setLocalAnswers({});
     } else {
-      handleFinalize();
+      setIsFinalized(true);
     }
   };
 
@@ -115,7 +123,6 @@ function PatientQuestionary() {
           })),
         })),
     };
-
     updatePatientQuestionaryAnswers(payload);
     navigation.navigate('PatientQuestionarySuccess' as never);
   };
