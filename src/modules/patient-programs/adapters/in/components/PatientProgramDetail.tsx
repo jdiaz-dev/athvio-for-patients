@@ -13,8 +13,8 @@ const PatientProgramDetail = ({ route }: Props) => {
   const { patientProgram } = route.params;
   const { data: patientProgramsState, error } = useSelector((state: ReduxStates) => state.patientPrograms.patientPrograms);
   const plan = patientProgramsState.find((pp) => pp.uuid === patientProgram);
-  console.log('-----patientProgramsState', patientProgramsState);
-  console.log('-----plan', plan?.plans);
+  // console.log('-----patientProgramsState', patientProgramsState);
+  // console.log('-----plan', plan?.plans);
 
   const [selectedPeriod, setSelectedPeriod] = useState('4weeks');
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -27,21 +27,12 @@ const PatientProgramDetail = ({ route }: Props) => {
     { id: '4weeks', label: '4 Weeks' },
   ];
 
-  const events: ICalendarEventBase[] = useMemo(() => {
-    if (!plan?.plans) return [];
-
-    return plan.plans.map((p) => ({
-      title: p.uuid, // 👈 renders the uuid as the event title
-      start: new Date(), // adjust field names to match your type
-      end: new Date(),
-    }));
-  }, [plan]);
-
   const scrollLeft = () => scrollRef.current?.scrollTo({ x: 0, animated: true });
   const scrollRight = () => scrollRef.current?.scrollToEnd({ animated: true });
 
   const renderEvent = <T extends ICalendarEventBase>(event: T, touchableOpacityProps: CalendarTouchableOpacityProps) => {
     console.log('-----event', event);
+    // console.log('-----touchableOpacityProps', touchableOpacityProps);
     return (
       <TouchableOpacity {...touchableOpacityProps}>
         <View style={styles.dayCellPlaceholder}>
@@ -52,51 +43,16 @@ const PatientProgramDetail = ({ route }: Props) => {
   };
 
   const [date, setDate] = useState(new Date());
-
-  /* const events: CalendarEvent[] = [
-    {
-      title: 'Nutrition Consultation',
-      start: new Date(new Date().setHours(10, 0, 0, 0)),
-      end: new Date(new Date().setHours(11, 0, 0, 0)),
-    },
-    {
-      title: 'Patient Follow-up',
-      start: new Date(new Date().setHours(14, 0, 0, 0)),
-      end: new Date(new Date().setHours(15, 0, 0, 0)),
-    },
-  ]; */
-
-  const renderHeader = (currentDate: Date) => {
-    console.log('-----currentDate', currentDate);
-    const goPrev = () => {
-      const d = new Date(currentDate);
-      d.setMonth(d.getMonth() - 1);
-      setDate(d);
-    };
-
-    const goNext = () => {
-      const d = new Date(currentDate);
-      d.setMonth(d.getMonth() + 1);
-      setDate(d);
-    };
-
-    const formatMonth = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
-
-    return (
-      <View style={styles.header}>
-        <TouchableOpacity onPress={goPrev}>
-          <Text style={styles.nav}>{'<<<<'}</Text>
-        </TouchableOpacity>
-
-        <Text style={styles.title}>{formatMonth(currentDate)}</Text>
-
-        <TouchableOpacity onPress={goNext}>
-          <Text style={styles.nav}>{'>>>>'}</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  };
-
+  const [arrayDays, setArrayDays] = useState<Date[]>([]);
+  const [isEndDay, setIsEndDay] = useState(false);
+  const events: ICalendarEventBase[] = useMemo(() => {
+    if (!isEndDay) return [];
+    return arrayDays.map((d) => ({
+      title: 'p.uuid',
+      start: new Date(d),
+      end: new Date(d),
+    }));
+  }, [isEndDay]);
   // Custom renderer for date numbers using renderCustomDateForMonth
   const renderCustomDate = (date: Date) => {
     // Get the first day of the displayed month
@@ -115,7 +71,8 @@ const PatientProgramDetail = ({ route }: Props) => {
 
     // Cell number is: days from previous month + day of current/next month
     const cellNumber = firstDayWeekday + diffDays + 1;
-
+    arrayDays.push(date);
+    if (cellNumber === 42) setIsEndDay(true);
     return (
       <View style={styles.customDateContainer}>
         <Text style={styles.customDateText}>{cellNumber}</Text>
