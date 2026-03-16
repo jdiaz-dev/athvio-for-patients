@@ -1,10 +1,9 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Dimensions, Image } from 'react-native';
 import { Calendar, CalendarTouchableOpacityProps, ICalendarEventBase } from 'react-native-big-calendar';
 import { useSelector } from 'react-redux';
 import { ProgramsStackParamList } from 'src/modules/patient-programs/adapters/in/components/ProgramNavigator';
-import { PatientProgram } from 'src/modules/patient-programs/adapters/out/patient-program';
 import { ReduxStates } from 'src/shared/types/types';
 
 type Props = NativeStackScreenProps<ProgramsStackParamList, 'PatientProgramDetail'>;
@@ -12,9 +11,7 @@ type Props = NativeStackScreenProps<ProgramsStackParamList, 'PatientProgramDetai
 const PatientProgramDetail = ({ route }: Props) => {
   const { patientProgram } = route.params;
   const { data: patientProgramsState, error } = useSelector((state: ReduxStates) => state.patientPrograms.patientPrograms);
-  const plan = patientProgramsState.find((pp) => pp.uuid === patientProgram);
-  // console.log('-----patientProgramsState', patientProgramsState);
-  // console.log('-----plan', plan?.plans);
+  const planState = patientProgramsState.find((pp) => pp.uuid === patientProgram);
 
   const [selectedPeriod, setSelectedPeriod] = useState('4weeks');
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -31,8 +28,6 @@ const PatientProgramDetail = ({ route }: Props) => {
   const scrollRight = () => scrollRef.current?.scrollToEnd({ animated: true });
 
   const renderEvent = <T extends ICalendarEventBase>(event: T, touchableOpacityProps: CalendarTouchableOpacityProps) => {
-    console.log('-----event', event);
-    // console.log('-----touchableOpacityProps', touchableOpacityProps);
     return (
       <TouchableOpacity {...touchableOpacityProps}>
         <View style={styles.dayCellPlaceholder}>
@@ -53,6 +48,20 @@ const PatientProgramDetail = ({ route }: Props) => {
       end: new Date(d),
     }));
   }, [isEndDay]);
+
+  useEffect(() => {
+    const changeStyleCalendarWeek = () => {
+      const style = document.createElement('style');
+      style.innerHTML = `
+      .css-view-175oi2r.r-flex-13awgt0.r-flexDirection-18u37iz {
+        min-height: auto !important;
+      }
+    `;
+      document.head.appendChild(style);
+    };
+
+    changeStyleCalendarWeek();
+  }, []);
   // Custom renderer for date numbers using renderCustomDateForMonth
   const renderCustomDate = (date: Date) => {
     // Get the first day of the displayed month
@@ -73,17 +82,16 @@ const PatientProgramDetail = ({ route }: Props) => {
     const cellNumber = firstDayWeekday + diffDays + 1;
     arrayDays.push(date);
     if (cellNumber === 42) setIsEndDay(true);
+
+    const plan = planState?.plans.find((p) => p.day === cellNumber);
     return (
       <View style={styles.customDateContainer}>
         <Text style={styles.customDateText}>{cellNumber}</Text>
-        <Text style={{ color: '#fff', fontSize: 10 }}>p.uuid p.uuid p.uuid p.uuid p.uuid</Text>
-        <Text style={{ color: '#fff', fontSize: 10 }}>p.uuid p.uuid p.uuid p.uuid p.uuid</Text>
-        <Text style={{ color: '#fff', fontSize: 10 }}>p.uuid p.uuid p.uuid p.uuid p.uuid</Text>
-        <Text style={{ color: '#fff', fontSize: 10 }}>p.uuid p.uuid p.uuid p.uuid p.uuid</Text>
-        <Text style={{ color: '#fff', fontSize: 10 }}>p.uuid p.uuid p.uuid p.uuid p.uuid</Text>
-        <Text style={{ color: '#fff', fontSize: 10 }}>p.uuid p.uuid p.uuid p.uuid p.uuid</Text>
-        <Text style={{ color: '#fff', fontSize: 10 }}>p.uuid p.uuid p.uuid p.uuid p.uuid</Text>
-        <Text style={{ color: '#fff', fontSize: 10 }}>p.uuid p.uuid p.uuid p.uuid p.uuid</Text>
+        {plan?.meals.map((meal) => (
+          <Text key={meal.uuid} style={{ color: '#fff', fontSize: 10 }}>
+            ➤ {meal.mealTag} - {meal.name}
+          </Text>
+        ))}
       </View>
     );
   };
@@ -127,7 +135,7 @@ const PatientProgramDetail = ({ route }: Props) => {
             date={selectedDate}
             swipeEnabled={false}
             showTime={false}
-            renderEvent={renderEvent}
+            // renderEvent={renderEvent}
             // renderHeader={renderHeader}
             renderCustomDateForMonth={renderCustomDate}
             weekStartsOn={1} // Start week on Monday
