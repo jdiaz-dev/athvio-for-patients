@@ -76,6 +76,14 @@ const PatientProgramDetail = ({ route }: Props) => {
     return (
       <View style={styles.customDateContainer}>
         <Text style={styles.customDateText}>{cellNumber}</Text>
+        <Text style={{ color: '#fff', fontSize: 10 }}>p.uuid p.uuid p.uuid p.uuid p.uuid</Text>
+        <Text style={{ color: '#fff', fontSize: 10 }}>p.uuid p.uuid p.uuid p.uuid p.uuid</Text>
+        <Text style={{ color: '#fff', fontSize: 10 }}>p.uuid p.uuid p.uuid p.uuid p.uuid</Text>
+        <Text style={{ color: '#fff', fontSize: 10 }}>p.uuid p.uuid p.uuid p.uuid p.uuid</Text>
+        <Text style={{ color: '#fff', fontSize: 10 }}>p.uuid p.uuid p.uuid p.uuid p.uuid</Text>
+        <Text style={{ color: '#fff', fontSize: 10 }}>p.uuid p.uuid p.uuid p.uuid p.uuid</Text>
+        <Text style={{ color: '#fff', fontSize: 10 }}>p.uuid p.uuid p.uuid p.uuid p.uuid</Text>
+        <Text style={{ color: '#fff', fontSize: 10 }}>p.uuid p.uuid p.uuid p.uuid p.uuid</Text>
       </View>
     );
   };
@@ -293,13 +301,14 @@ const styles = StyleSheet.create({
   // Custom date rendering styles
   customDateContainer: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
   },
   customDateText: {
     color: '#ffffff',
     fontSize: 14,
     fontWeight: '600',
+    textAlign: 'left',
   },
 });
 
