@@ -1,14 +1,15 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import React, { useState, useMemo, useRef, useEffect } from 'react';
-import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Dimensions, Image } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, TouchableOpacity, ViewStyle } from 'react-native';
 import { Calendar, CalendarTouchableOpacityProps, ICalendarEventBase } from 'react-native-big-calendar';
 import { useSelector } from 'react-redux';
+import PlanMealsModal from 'src/modules/patient-programs/adapters/in/components/PlanMealsModal';
 import { ProgramsStackParamList } from 'src/modules/patient-programs/adapters/in/components/ProgramNavigator';
-import { ReduxStates } from 'src/shared/types/types';
+import { Meal, ReduxStates } from 'src/shared/types/types';
 
 type Props = NativeStackScreenProps<ProgramsStackParamList, 'PatientProgramDetail'>;
 
-const PatientProgramDetail = ({ route }: Props) => {
+const PatientProgramDetails = ({ route }: Props) => {
   const { patientProgram } = route.params;
   const { data: patientProgramsState, error } = useSelector((state: ReduxStates) => state.patientPrograms.patientPrograms);
   const planState = patientProgramsState.find((pp) => pp.uuid === patientProgram);
@@ -16,6 +17,8 @@ const PatientProgramDetail = ({ route }: Props) => {
   const [selectedPeriod, setSelectedPeriod] = useState('4weeks');
   const [selectedDate, setSelectedDate] = useState(new Date());
   const scrollRef = useRef<ScrollView>(null);
+
+  const [selectedDayMeals, setSelectedDayMeals] = useState<Meal[] | null>(null);
 
   const periods = [
     { id: 'today', label: 'Today' },
@@ -31,7 +34,7 @@ const PatientProgramDetail = ({ route }: Props) => {
     return (
       <TouchableOpacity {...touchableOpacityProps}>
         <View style={styles.dayCellPlaceholder}>
-          <Text style={{ color: '#fff', fontSize: 10 }}>{event.title}</Text> {/* uuid shown here */}
+          <Text style={{ color: '#fff', fontSize: 10 }}>{event.title}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -62,37 +65,39 @@ const PatientProgramDetail = ({ route }: Props) => {
 
     changeStyleCalendarWeek();
   }, []);
+
   // Custom renderer for date numbers using renderCustomDateForMonth
   const renderCustomDate = (date: Date) => {
-    // Get the first day of the displayed month
     const firstDayOfMonth = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), 1);
 
-    // Get what day of week the month starts on (0=Sunday, 6=Saturday)
-    // We need to adjust for weekStartsOn={1} (Monday)
     let firstDayWeekday = firstDayOfMonth.getDay();
-    // Convert Sunday=0 to Sunday=6, and shift everything so Monday=0
     firstDayWeekday = firstDayWeekday === 0 ? 6 : firstDayWeekday - 1;
 
-    // Calculate the cell number (1-based)
-    // For dates before the first day of month
     const diffTime = date.getTime() - firstDayOfMonth.getTime();
     const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
 
-    // Cell number is: days from previous month + day of current/next month
     const cellNumber = firstDayWeekday + diffDays + 1;
     arrayDays.push(date);
     if (cellNumber === 42) setIsEndDay(true);
 
     const plan = planState?.plans.find((p) => p.day === cellNumber);
+    const hasMeals = plan?.meals && plan.meals.length > 0;
+
     return (
-      <View style={styles.customDateContainer}>
+      <TouchableOpacity
+        style={styles.customDateContainer}
+        activeOpacity={hasMeals ? 0.7 : 1}
+        onPress={() => {
+          if (hasMeals) setSelectedDayMeals(plan!.meals);
+        }}
+      >
         <Text style={styles.customDateText}>{cellNumber}</Text>
-        {plan?.meals.map((meal) => (
+        {plan?.meals.map((meal: Meal) => (
           <Text key={meal.uuid} style={{ color: '#fff', fontSize: 10 }}>
             ➤ {meal.mealTag} - {meal.name}
           </Text>
         ))}
-      </View>
+      </TouchableOpacity>
     );
   };
 
@@ -138,7 +143,7 @@ const PatientProgramDetail = ({ route }: Props) => {
             // renderEvent={renderEvent}
             // renderHeader={renderHeader}
             renderCustomDateForMonth={renderCustomDate}
-            weekStartsOn={1} // Start week on Monday
+            weekStartsOn={1}
             hideNowIndicator
             // renderHeaderForMonthView={() => <View>{4556}</View>}
             bodyContainerStyle={{ borderTopWidth: 1, width: '100%' }}
@@ -157,12 +162,14 @@ const PatientProgramDetail = ({ route }: Props) => {
             }}
           />
         </View>
+
+        <PlanMealsModal selectedDayMeals={selectedDayMeals} setSelectedDayMeals={setSelectedDayMeals} />
       </View>
     </ScrollView>
   );
 };
 
-export default PatientProgramDetail;
+export default PatientProgramDetails;
 
 const styles = StyleSheet.create({
   container: {
@@ -244,7 +251,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#000000',
   },
   hiddenHeader: {
-    // height: 0,
     overflow: 'hidden',
   },
   eventCell: {
@@ -306,12 +312,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-  // Custom date rendering styles
   customDateContainer: {
     flex: 1,
-    // alignItems: 'center',
-    // justifyContent: 'center',
-  },
+  } as ViewStyle,
   customDateText: {
     color: '#ffffff',
     fontSize: 14,
@@ -323,7 +326,6 @@ const styles = StyleSheet.create({
 const styles2 = StyleSheet.create({
   headerContainer: {
     alignItems: 'center',
-    // paddingVertical: 1,
     backgroundColor: '#f5f5f5',
   },
   /*  monthText: {

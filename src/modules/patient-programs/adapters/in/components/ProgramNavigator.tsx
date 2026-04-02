@@ -1,7 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import PatientProgramList from 'src/modules/patient-programs/adapters/in/components/PatientPogramList';
-import PatientProgramDetail from 'src/modules/patient-programs/adapters/in/components/PatientProgramDetail';
+import PatientProgramDetail from 'src/modules/patient-programs/adapters/in/components/PatientProgramDetails';
 import { PatientProgram } from 'src/modules/patient-programs/adapters/out/patient-program';
 
 export type ProgramsStackParamList = {

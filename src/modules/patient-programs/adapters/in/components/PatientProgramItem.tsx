@@ -4,7 +4,7 @@ import { List, Surface } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { ReduxStates } from 'src/shared/types/types';
 import { PatientProgram } from 'src/modules/patient-programs/adapters/out/patient-program';
-import PatientProgramDetail from 'src/modules/patient-programs/adapters/in/components/PatientProgramDetail';
+import PatientProgramDetail from 'src/modules/patient-programs/adapters/in/components/PatientProgramDetails';
 
 function PatientProgramItem({
   patientProgram,
