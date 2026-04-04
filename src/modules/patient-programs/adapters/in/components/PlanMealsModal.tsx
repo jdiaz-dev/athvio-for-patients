@@ -77,18 +77,18 @@ const styles = StyleSheet.create({
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.75)',
-    justifyContent: 'flex-end',
+    justifyContent: 'center', // ← center vertically
+    alignItems: 'center', // ← center horizontally
   },
   modalCard: {
     backgroundColor: '#111111',
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
+    borderRadius: 24, // ← all corners rounded
     paddingTop: 16,
     paddingHorizontal: 20,
     paddingBottom: 32,
-    maxHeight: '85%',
-    borderWidth: 1,
-    borderBottomWidth: 0,
+    width: '50%', // ← medium fixed width
+    maxHeight: '60%', // ← medium height (not full screen)
+    borderWidth: 1, // ← restore bottom border
     borderColor: '#2a2a2a',
   },
   modalXButton: {
