@@ -37,7 +37,6 @@ function PatientProgramList() {
 
   return (
     <>
-      <View style={styles.container}>PatientProgramList</View>
       <View style={{ flex: 1 }}>
         <FlatList
           data={patientProgramsState || []}

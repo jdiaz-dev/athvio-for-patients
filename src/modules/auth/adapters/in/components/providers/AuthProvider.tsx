@@ -1,22 +1,19 @@
 import React, { ReactNode, useEffect, useState } from 'react';
-import {
-  createSessionCookies,
-  getToken,
-  getPatientId,
-  removeSessionCokkies,
-} from 'src/modules/auth/adapters/out/storage';
+import { createSessionCookies, getToken, getPatientId, removeSessionCokkies } from 'src/modules/auth/adapters/out/storage';
 import { CredentialsSignIn, JwtDto } from 'src/modules/auth/adapters/out/auth';
 import { useAuth } from 'src/modules/auth/adapters/out/authActions';
 import { AuthContext } from 'src/modules/auth/adapters/in/context/AuthContext';
-import { usePatient } from 'src/modules/account/out/patientActions';
+import { usePatient } from 'src/modules/patient/out/patientActions';
+import { EnabledModule } from 'src/modules/patient/out/patient';
 
 function AuthProvider({ children }: { children: ReactNode }) {
   const { signIn, signUp } = useAuth();
-  const { getPatient } = usePatient();
+  const { getPatientForMobile } = usePatient();
 
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [patient, setPatient] = useState<string | null>(null);
   const [assignedProfessional, setAssignedProfessional] = useState('');
+  const [enabledModules, setEnabledModules] = useState<EnabledModule[]>([]);
   const [fullnameAndSurname, setFullnameAndSurname] = useState('');
 
   useEffect(() => {
@@ -32,11 +29,13 @@ function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const getPatientHelper = async () => {
       if (patient !== null) {
-        const { data } = await getPatient({ patient });
+        const { data } = await getPatientForMobile({ patient });
         if (data) {
           setAssignedProfessional(data.getPatientForMobile.professional);
-          if (data.getPatientForMobile.user.firstname || data.getPatientForMobile.user.lastname)
+          if (data.getPatientForMobile.user.firstname || data.getPatientForMobile.user.lastname) {
             setFullnameAndSurname(`${data.getPatientForMobile.user.firstname} ${data.getPatientForMobile.user.lastname}`);
+            setEnabledModules(data.getPatientForMobile.user.enabledModules);
+          }
         }
       }
     };
@@ -65,7 +64,6 @@ function AuthProvider({ children }: { children: ReactNode }) {
     setIsAuthenticated(false);
     setPatient(null);
   };
-
   return (
     <AuthContext.Provider
       value={{
@@ -73,6 +71,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
         patient,
         assignedProfessional,
         fullnameAndSurname,
+        enabledModules,
         signInHandler,
         signUpHandler,
         signOutHandler,

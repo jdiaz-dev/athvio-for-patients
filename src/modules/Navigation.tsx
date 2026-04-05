@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { CommonActions } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -7,11 +7,10 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ChatScreen from 'src/modules/chat/adapters/in/components/Chat';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ScreenParamList } from 'src/shared/types/types';
-import Account from 'src/modules/account/in/Account';
-import PatientPlanList from 'src/modules/patient-plans/adapters/in/components/PatientPlanList';
-import NutritionalMealList from 'src/modules/nutritional-meals/adapters/in/components/NutritionalMealList';
-import PatientPogramList from 'src/modules/patient-programs/adapters/in/components/PatientPogramList';
+import SignOutPatient from 'src/modules/patient/in/SignOutPatient';
 import ProgramsNavigator from 'src/modules/patient-programs/adapters/in/components/ProgramNavigator';
+import { AuthContext } from 'src/modules/auth/adapters/in/context/AuthContext';
+import PatientPlanList from 'src/modules/patient-plans/adapters/in/components/PatientPlanList';
 
 const Tab = createBottomTabNavigator();
 
@@ -19,6 +18,8 @@ type NavigationProps = {
   navigation: NativeStackNavigationProp<ScreenParamList, 'Navigation'>;
 };
 function Navigation({ navigation }: NavigationProps) {
+  const { enabledModules } = useContext(AuthContext);
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -63,15 +64,18 @@ function Navigation({ navigation }: NavigationProps) {
         />
       )}
     >
-      <Tab.Screen
-        name="Programs"
-        // component={PatientPogramList}
-        component={ProgramsNavigator}
-        options={{
-          tabBarLabel: 'Programas',
-          tabBarIcon: ({ color, size }) => <Icon name="food" size={size} color={color} />,
-        }}
-      />
+      {enabledModules && enabledModules[0]?.name === 'programs' && (
+        <Tab.Screen
+          name="Programs"
+          // component={PatientPogramList}
+          component={ProgramsNavigator}
+          options={{
+            tabBarLabel: 'Programas',
+            tabBarIcon: ({ color, size }) => <Icon name="food" size={size} color={color} />,
+          }}
+        />
+      )}
+
       {/* <Tab.Screen
         name="NutritionalMeals"
         component={NutritionalMealList}
@@ -80,27 +84,29 @@ function Navigation({ navigation }: NavigationProps) {
           tabBarIcon: ({ color, size }) => <Icon name="food" size={size} color={color} />,
         }}
       /> */}
+      {enabledModules && enabledModules[0]?.name === 'patient-plans' && (
+        <Tab.Screen
+          name="PatientPlanList"
+          component={PatientPlanList}
+          options={{
+            tabBarLabel: 'Plans',
+            tabBarIcon: ({ color, size }) => <Icon name="home" size={size} color={color} />,
+          }}
+        />
+      )}
       {/* <Tab.Screen
-        name="PatientPlanList"
-        component={PatientPlanList}
-        options={{
-          tabBarLabel: 'Plans',
-          tabBarIcon: ({ color, size }) => <Icon name="home" size={size} color={color} />,
-        }}
-      /> */}
-      <Tab.Screen
         name="Chat"
         component={ChatScreen}
         options={{
           tabBarLabel: 'Chat',
           tabBarIcon: ({ color, size }) => <Icon name="chat" size={size} color={color} />,
         }}
-      />
+      /> */}
       <Tab.Screen
-        name="Account"
-        component={Account}
+        name="SignOutPatient"
+        component={SignOutPatient}
         options={{
-          tabBarLabel: 'Account',
+          tabBarLabel: 'Cuenta',
           tabBarIcon: ({ color, size }) => <Icon name="account" size={size} color={color} />,
         }}
       />

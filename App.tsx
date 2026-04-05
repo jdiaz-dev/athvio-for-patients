@@ -16,6 +16,8 @@ import SignUp from 'src/modules/auth/adapters/in/components/SignUp';
 import Frecuency from 'src/modules/frecuency/Frecuency';
 import PatientQuestionary from 'src/modules/patient-questionary/adapters/in/components/PatientQuestionary';
 import PatientQuestionarySuccess from 'src/modules/patient-questionary/adapters/in/components/PatientQuestionarySucess';
+import { useContext } from 'react';
+import { AuthContext } from 'src/modules/auth/adapters/in/context/AuthContext';
 
 const theme = {
   ...DefaultTheme,
@@ -47,12 +49,15 @@ const linking = {
 };
 
 export default function App() {
+  const { enabledModules, isAuthenticated } = useContext(AuthContext);
+  console.log('----------enabledModules:', enabledModules); // Debugging log
+  console.log('----------isAuthenticated:', isAuthenticated); // Debugging log
   return (
     <ApolloProvider client={apolloClient}>
       <PaperProvider theme={theme}>
-        <NavigationContainer linking={linking}>
-          <Provider store={store}>
-            <AuthProvider>
+        <Provider store={store}>
+          <AuthProvider>
+            <NavigationContainer linking={linking}>
               <Stack.Navigator initialRouteName="SignUp">
                 <Stack.Screen
                   name="Frecuency"
@@ -157,9 +162,9 @@ export default function App() {
                   )}
                 />
               </Stack.Navigator>
-            </AuthProvider>
-          </Provider>
-        </NavigationContainer>
+            </NavigationContainer>
+          </AuthProvider>
+        </Provider>
       </PaperProvider>
     </ApolloProvider>
   );

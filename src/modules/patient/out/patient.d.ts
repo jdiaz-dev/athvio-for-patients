@@ -1,3 +1,8 @@
+type EnabledModule = {
+  name: string;
+  isEnabled: boolean;
+};
+
 export type PatientBody = {
   uuid: string;
   user: {
@@ -5,8 +10,10 @@ export type PatientBody = {
     lastname: string;
     email?: string;
     photo?: string;
+    assignedModule: string;
+    enabledModules: EnabledModule[];
   };
-  professional:string
+  professional: string;
 };
 
 export type GetPatientInput = {

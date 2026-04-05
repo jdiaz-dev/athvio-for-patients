@@ -14,8 +14,8 @@ const Stack = createNativeStackNavigator<ProgramsStackParamList>();
 function ProgramsNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="PatientProgramList" component={PatientProgramList} />
-      <Stack.Screen name="PatientProgramDetail" component={PatientProgramDetail} />
+      <Stack.Screen name="PatientProgramList" options={{ headerShown: false }} component={PatientProgramList} />
+      <Stack.Screen name="PatientProgramDetail" options={{ headerShown: false }} component={PatientProgramDetail} />
     </Stack.Navigator>
   );
 }

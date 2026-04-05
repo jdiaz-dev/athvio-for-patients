@@ -3,7 +3,7 @@ import { View } from 'react-native';
 import { AuthContext } from 'src/modules/auth/adapters/in/context/AuthContext';
 import { Button, Text } from 'react-native-paper';
 
-function Account() {
+function SignOutPaptient() {
   const { fullnameAndSurname, signOutHandler } = useContext(AuthContext);
 
   return (
@@ -16,4 +16,4 @@ function Account() {
   );
 }
 
-export default Account;
+export default SignOutPaptient;
