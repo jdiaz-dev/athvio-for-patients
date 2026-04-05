@@ -1,70 +1,76 @@
 import React from 'react';
 import { StyleSheet, View, Text, ScrollView, TouchableOpacity, Image, Modal, Pressable } from 'react-native';
+import { useWindowDimensions } from 'react-native';
 import { Meal } from 'src/shared/types/types';
 
 function PlanMealsModal({
   selectedDayMeals,
   setSelectedDayMeals,
 }: {
-  selectedDayMeals: Meal[] | null;
-  setSelectedDayMeals: (meals: Meal[] | null) => void;
+  selectedDayMeals: { day: number; meals: Meal[] } | null;
+  setSelectedDayMeals: (data: { day: number; meals: Meal[] } | null) => void;
 }) {
+  const { width } = useWindowDimensions();
   return (
     <Modal visible={!!selectedDayMeals} transparent animationType="fade" onRequestClose={() => setSelectedDayMeals(null)}>
       {/* Dark overlay — tap outside card to close */}
       <Pressable style={styles.modalOverlay} onPress={() => setSelectedDayMeals(null)}>
         {/* Card — stop event from bubbling to overlay */}
-        <Pressable style={styles.modalCard} onPress={(e) => e.stopPropagation()}>
+        <Pressable style={{ ...styles.modalCard, width: width <= 850 ? '90%' : '60%' }} onPress={(e) => e.stopPropagation()}>
           {/* ✕ close button */}
           <TouchableOpacity style={styles.modalXButton} onPress={() => setSelectedDayMeals(null)}>
             <Text style={styles.modalXText}>✕</Text>
           </TouchableOpacity>
 
-          <Text style={styles.modalHeading}>Meals for this day</Text>
+          <Text style={styles.modalHeading}>Comidas del día {selectedDayMeals?.day}</Text>
 
-          <ScrollView style={styles.modalScroll} showsVerticalScrollIndicator={false}>
-            {selectedDayMeals?.map((meal, index) => (
-              <View key={meal.uuid} style={[styles.mealCard, index > 0 && styles.mealCardSeparator]}>
-                {/* Image */}
-                {meal.image ? (
-                  <Image source={{ uri: meal.image }} style={styles.mealImage} resizeMode="cover" />
-                ) : (
-                  <View style={styles.mealImagePlaceholder}>
-                    <Text style={styles.mealImagePlaceholderText}>🍽️</Text>
+          <View style={{ flex: 1 }}>
+            <ScrollView style={styles.modalScroll} showsVerticalScrollIndicator={true}>
+              {selectedDayMeals?.meals.map((meal, index) => (
+                <View key={meal.uuid} style={[styles.mealCard, index > 0 && styles.mealCardSeparator]}>
+                  {/* Image */}
+                  {meal.image ? (
+                    <Image source={{ uri: meal.image }} style={styles.mealImage} resizeMode="cover" />
+                  ) : (
+                    <View style={styles.mealImagePlaceholder}>
+                      <Text style={styles.mealImagePlaceholderText}>🍽️</Text>
+                    </View>
+                  )}
+
+                  {/* Name */}
+                  <Text style={styles.mealName}>{meal.name}</Text>
+
+                  {/* Tag badge */}
+                  <View style={styles.mealTagBadge}>
+                    <Text style={styles.mealTagText}>{meal.mealTag}</Text>
                   </View>
-                )}
 
-                {/* Name */}
-                <Text style={styles.mealName}>{meal.name}</Text>
+                  {/* Ingredients */}
+                  {meal.ingredientDetails && meal.ingredientDetails.length > 0 && (
+                    <View style={styles.section}>
+                      <Text style={styles.sectionTitle}>Ingredientes</Text>
+                      {meal.ingredientDetails.map(({ ingredient }, i) => (
+                        <View key={i} style={styles.ingredientRow}>
+                          <View style={styles.ingredientDot} />
+                          <Text style={styles.ingredientText}>
+                            {ingredient?.amount} {ingredient?.label} {ingredient?.name}
+                          </Text>
+                        </View>
+                      ))}
+                    </View>
+                  )}
 
-                {/* Tag badge */}
-                <View style={styles.mealTagBadge}>
-                  <Text style={styles.mealTagText}>{meal.mealTag}</Text>
+                  {/* Recipe */}
+                  {meal.cookingInstructions ? (
+                    <View style={styles.section}>
+                      <Text style={styles.sectionTitle}>Preparación</Text>
+                      <Text style={styles.recipeText}>{meal.cookingInstructions}</Text>
+                    </View>
+                  ) : null}
                 </View>
-
-                {/* Ingredients */}
-                {meal.ingredientDetails && meal.ingredientDetails.length > 0 && (
-                  <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>Ingredients</Text>
-                    {meal.ingredientDetails.map((ingredientDetail, i) => (
-                      <View key={i} style={styles.ingredientRow}>
-                        <View style={styles.ingredientDot} />
-                        <Text style={styles.ingredientText}>{ingredientDetail.ingredient?.name}</Text>
-                      </View>
-                    ))}
-                  </View>
-                )}
-
-                {/* Recipe */}
-                {meal.cookingInstructions ? (
-                  <View style={styles.section}>
-                    <Text style={styles.sectionTitle}>Recipe</Text>
-                    <Text style={styles.recipeText}>{meal.cookingInstructions}</Text>
-                  </View>
-                ) : null}
-              </View>
-            ))}
-          </ScrollView>
+              ))}
+            </ScrollView>
+          </View>
         </Pressable>
       </Pressable>
     </Modal>
@@ -86,7 +92,6 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingHorizontal: 20,
     paddingBottom: 32,
-    width: '50%', // ← medium fixed width
     maxHeight: '60%', // ← medium height (not full screen)
     borderWidth: 1, // ← restore bottom border
     borderColor: '#2a2a2a',

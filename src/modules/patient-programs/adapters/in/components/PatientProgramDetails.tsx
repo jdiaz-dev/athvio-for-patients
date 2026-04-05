@@ -14,18 +14,10 @@ const PatientProgramDetails = ({ route }: Props) => {
   const { data: patientProgramsState, error } = useSelector((state: ReduxStates) => state.patientPrograms.patientPrograms);
   const planState = patientProgramsState.find((pp) => pp.uuid === patientProgram);
 
-  const [selectedPeriod, setSelectedPeriod] = useState('4weeks');
   const [selectedDate, setSelectedDate] = useState(new Date());
   const scrollRef = useRef<ScrollView>(null);
 
-  const [selectedDayMeals, setSelectedDayMeals] = useState<Meal[] | null>(null);
-
-  const periods = [
-    { id: 'today', label: 'Today' },
-    { id: 'weekly', label: 'Weekly' },
-    { id: '2weeks', label: '2 Weeks' },
-    { id: '4weeks', label: '4 Weeks' },
-  ];
+  const [selectedDayMeals, setSelectedDayMeals] = useState<{ day: number; meals: Meal[] } | null>(null);
 
   const scrollLeft = () => scrollRef.current?.scrollTo({ x: 0, animated: true });
   const scrollRight = () => scrollRef.current?.scrollToEnd({ animated: true });
@@ -40,7 +32,6 @@ const PatientProgramDetails = ({ route }: Props) => {
     );
   };
 
-  const [date, setDate] = useState(new Date());
   const [arrayDays, setArrayDays] = useState<Date[]>([]);
   const [isEndDay, setIsEndDay] = useState(false);
   const events: ICalendarEventBase[] = useMemo(() => {
@@ -88,10 +79,10 @@ const PatientProgramDetails = ({ route }: Props) => {
         style={styles.customDateContainer}
         activeOpacity={hasMeals ? 0.7 : 1}
         onPress={() => {
-          if (hasMeals) setSelectedDayMeals(plan!.meals);
+          if (hasMeals) setSelectedDayMeals({ day: cellNumber, meals: plan!.meals });
         }}
       >
-        <Text style={styles.customDateText}>{cellNumber}</Text>
+        <Text style={styles.customDateText}>Día {cellNumber}</Text>
         {plan?.meals.map((meal: Meal) => (
           <Text key={meal.uuid} style={{ color: '#fff', fontSize: 10 }}>
             ➤ {meal.mealTag} - {meal.name}
@@ -104,31 +95,14 @@ const PatientProgramDetails = ({ route }: Props) => {
   return (
     <ScrollView style={{ width: '100%' }}>
       <View style={styles.container}>
-        {/* Period Selector */}
-        {periods.map((period) => (
-          <TouchableOpacity
-            key={period.id}
-            style={[styles.periodButton, selectedPeriod === period.id && styles.periodButtonActive]}
-            onPress={() => setSelectedPeriod(period.id)}
-          >
-            <Text style={[styles.periodText, selectedPeriod === period.id && styles.periodTextActive]}>{period.label}</Text>
-          </TouchableOpacity>
-        ))}
-
         {/* Meal Section Header */}
         <View style={styles.sectionHeader}>
           <View style={styles.mealInfo}>
-            <View style={styles.clockIcon}>
-              <Text style={styles.clockText}>🕐</Text>
-            </View>
             <View>
-              <Text style={styles.mealTitle}>Breakfast</Text>
-              <Text style={styles.mealTime}>08:00AM</Text>
+              <Text style={styles.mealTitle}>{planState?.name}</Text>
+              <Text style={styles.mealDescription}>{planState?.description}</Text>
             </View>
           </View>
-          <TouchableOpacity style={styles.deleteButton}>
-            <Text style={styles.deleteIcon}>🗑️</Text>
-          </TouchableOpacity>
         </View>
 
         {/* Calendar View */}
@@ -219,31 +193,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 12,
   },
-  clockIcon: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: '#1a1a1a',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  clockText: {
-    fontSize: 16,
-  },
+
   mealTitle: {
     color: '#ffffff',
     fontSize: 16,
     fontWeight: '600',
   },
-  mealTime: {
+  mealDescription: {
     color: '#888888',
     fontSize: 14,
-  },
-  deleteButton: {
-    padding: 8,
-  },
-  deleteIcon: {
-    fontSize: 20,
   },
   calendarContainer: {
     width: '100%',
