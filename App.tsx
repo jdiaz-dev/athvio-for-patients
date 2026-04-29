@@ -18,6 +18,8 @@ import PatientQuestionary from 'src/modules/patient-questionary/adapters/in/comp
 import PatientQuestionarySuccess from 'src/modules/patient-questionary/adapters/in/components/PatientQuestionarySucess';
 import { useContext } from 'react';
 import { AuthContext } from 'src/modules/auth/adapters/in/context/AuthContext';
+import ActivatePatient from 'src/modules/patient/in/ActivatePatient/ActivePatient';
+import Congratulations from 'src/modules/patient/in/Congratulations';
 
 const theme = {
   ...DefaultTheme,
@@ -36,6 +38,13 @@ const linking = {
     screens: {
       SignUp: 'signup',
       SignIn: 'signin',
+      Congratulations: 'congratulations',
+      Activate: {
+        path: 'activate/:user',
+        parse: {
+          tabTitle: (title: string) => decodeURIComponent(title),
+        },
+      },
       Questionary: 'questionary',
       Navigation: {
         path: 'navigation/:tabTitle',
@@ -114,6 +123,42 @@ export default function App() {
                   )}
                 />
                 <Stack.Screen
+                  name="Activate"
+                  options={() => ({
+                    headerShown: false,
+                    headerLeft: () => null,
+                    headerTitleStyle: {
+                      ...styles.headerTitleStyle,
+                    },
+                    headerStyle: {
+                      ...styles.headerStyle,
+                    },
+                  })}
+                  component={() => (
+                    <PublicRoute>
+                      <ActivatePatient />
+                    </PublicRoute>
+                  )}
+                />
+                <Stack.Screen
+                  name="Congratulations"
+                  options={() => ({
+                    headerShown: false,
+                    headerLeft: () => null,
+                    headerTitleStyle: {
+                      ...styles.headerTitleStyle,
+                    },
+                    headerStyle: {
+                      ...styles.headerStyle,
+                    },
+                  })}
+                  component={() => (
+                    <PublicRoute>
+                      <Congratulations />
+                    </PublicRoute>
+                  )}
+                />
+                <Stack.Screen
                   name="Questionary"
                   options={() => ({
                     headerShown: false,
@@ -181,4 +226,3 @@ const styles = StyleSheet.create({
     height: 35,
   },
 });
-/* stayed: create a path(screen) to see program patient detail */

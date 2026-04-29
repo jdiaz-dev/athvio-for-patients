@@ -80,11 +80,14 @@ export type ReduxStates = {
 
 export type ScreenParamList = {
   SignIn: undefined;
+  Activate: { user: string };
   SignUp: undefined;
+  Congratulations: undefined;
   Questionary: undefined;
   PatientQuestionarySuccess: undefined;
   Navigation: { tabTitle: string };
 };
 export type SignInScreenNavigationProp = NativeStackNavigationProp<ScreenParamList, 'SignIn'>;
 export type SignUpScreenNavigationProp = NativeStackNavigationProp<ScreenParamList, 'SignUp'>;
+export type CongratulationsScreenNavigationProp = NativeStackNavigationProp<ScreenParamList, 'Congratulations'>;
 export type NavigationScreenNavigationProp = NativeStackNavigationProp<ScreenParamList, 'Navigation'>;

@@ -3,16 +3,30 @@ type EnabledModule = {
   isEnabled: boolean;
 };
 
+export type User = {
+  firstname: string;
+  lastname: string;
+  email?: string;
+  photo?: string;
+  assignedModule: string;
+  enabledModules: EnabledModule[];
+};
+
+export type GetUserInput = {
+  user: string;
+};
+
+export type GetUserRequest = {
+  input: GetUserInput;
+};
+
+export type GetUserResponse = {
+  getUser: User;
+};
+
 export type PatientBody = {
   uuid: string;
-  user: {
-    firstname: string;
-    lastname: string;
-    email?: string;
-    photo?: string;
-    assignedModule: string;
-    enabledModules: EnabledModule[];
-  };
+  user: User;
   professional: string;
 };
 
@@ -26,4 +40,17 @@ export type GetPatientResponse = {
 
 export type GetPatientRequest = {
   input: GetPatientInput;
+};
+
+export type ActivatePatientBody = {
+  user: string;
+  password: string;
+};
+
+export type ActivatePatientRequest = {
+  input: ActivatePatientBody;
+};
+
+export type ActivatePatientResponse = {
+  activatePatient: User;
 };
