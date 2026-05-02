@@ -2,15 +2,16 @@ import React, { useContext } from 'react';
 
 import { CommonActions } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { BottomNavigation } from 'react-native-paper';
+import { BottomNavigation, useTheme } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ChatScreen from 'src/modules/chat/adapters/in/components/Chat';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ScreenParamList } from 'src/shared/types/types';
-import SignOutPatient from 'src/modules/patient/in/SignOutPatient';
 import ProgramsNavigator from 'src/modules/patient-programs/adapters/in/components/ProgramNavigator';
 import { AuthContext } from 'src/modules/auth/adapters/in/context/AuthContext';
 import PatientPlanList from 'src/modules/patient-plans/adapters/in/components/PatientPlanList';
+import { Text, View } from 'react-native';
+import Account from 'src/modules/patient/Account';
 
 const Tab = createBottomTabNavigator();
 
@@ -19,6 +20,7 @@ type NavigationProps = {
 };
 function Navigation({ navigation }: NavigationProps) {
   const { enabledModules } = useContext(AuthContext);
+  const paperTheme = useTheme();
 
   return (
     <Tab.Navigator
@@ -29,6 +31,54 @@ function Navigation({ navigation }: NavigationProps) {
         <BottomNavigation.Bar
           navigationState={state}
           safeAreaInsets={insets}
+          style={{
+            backgroundColor: paperTheme.colors.secondary,
+
+            // top separator
+            borderTopWidth: 1,
+            borderTopColor: 'rgba(255,255,255,0.08)',
+
+            // iOS shadow
+            shadowColor: '#000',
+            shadowOffset: { width: 0, height: -4 }, // negative = top shadow
+            shadowOpacity: 0.25,
+            shadowRadius: 8,
+
+            // Android shadow
+            elevation: 12,
+          }}
+          theme={{
+            colors: {
+              secondaryContainer: '#1C304C', // active tab background
+              onSecondaryContainer: '#ffffff', // active text/icon color
+              onSurfaceVariant: '#ffffff', // inactive text/icon color
+            },
+          }}
+          renderLabel={({ route, focused }) => {
+            const { options } = descriptors[route.key];
+            const label = (options.tabBarLabel || route.name) as string;
+
+            return (
+              <View
+                style={{
+                  width: '100%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginTop: 2,
+                }}
+              >
+                <Text
+                  style={{
+                    color: focused ? '#ffffff' : '#ffffff', // active : inactive
+                    // fontSize: 12,
+                    // fontWeight: focused ? '700' : '400',
+                  }}
+                >
+                  {label}
+                </Text>
+              </View>
+            );
+          }}
           onTabPress={({ route, preventDefault }) => {
             const event = tabNav.emit({
               type: 'tabPress',
@@ -64,7 +114,7 @@ function Navigation({ navigation }: NavigationProps) {
         />
       )}
     >
-      {enabledModules && enabledModules[0]?.name === 'programs' && (
+      {/* {enabledModules && enabledModules[0]?.name === 'programs' && (
         <Tab.Screen
           name="Programs"
           // component={PatientPogramList}
@@ -74,7 +124,7 @@ function Navigation({ navigation }: NavigationProps) {
             tabBarIcon: ({ color, size }) => <Icon name="food" size={size} color={color} />,
           }}
         />
-      )}
+      )} */}
 
       {/* <Tab.Screen
         name="NutritionalMeals"
@@ -89,7 +139,7 @@ function Navigation({ navigation }: NavigationProps) {
           name="PatientPlanList"
           component={PatientPlanList}
           options={{
-            tabBarLabel: 'Plans',
+            tabBarLabel: 'Planes',
             tabBarIcon: ({ color, size }) => <Icon name="home" size={size} color={color} />,
           }}
         />
@@ -104,7 +154,7 @@ function Navigation({ navigation }: NavigationProps) {
       /> */}
       <Tab.Screen
         name="SignOutPatient"
-        component={SignOutPatient}
+        component={Account}
         options={{
           tabBarLabel: 'Cuenta',
           tabBarIcon: ({ color, size }) => <Icon name="account" size={size} color={color} />,

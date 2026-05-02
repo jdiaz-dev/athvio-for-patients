@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useState } from 'react';
-import { createSessionCookies, getToken, getPatientId, removeSessionCokkies } from 'src/modules/auth/adapters/out/storage';
+import { createSessionCookies, getToken, getPatientId, removeSessionCokkies } from 'src/shared/storage/storage';
 import { CredentialsSignIn, JwtDto } from 'src/modules/auth/adapters/out/auth';
 import { useAuth } from 'src/modules/auth/adapters/out/authActions';
 import { AuthContext } from 'src/modules/auth/adapters/in/context/AuthContext';
@@ -24,7 +24,7 @@ function AuthProvider({ children }: { children: ReactNode }) {
       setIsAuthenticated(isAuth != null);
     };
     verfifyAuthentication();
-  }, [isAuthenticated]); // Runs only once on mount
+  }, [isAuthenticated]);
 
   useEffect(() => {
     const getPatientHelper = async () => {
