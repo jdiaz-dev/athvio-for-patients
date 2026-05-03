@@ -15,12 +15,12 @@ export const LightTheme: MD3Theme = {
   roundness: 3,
   colors: {
     ...MD3LightTheme.colors,
-    primary: '#118383',
+    primary: '#0FAD9C', //
     onPrimary: '#FFFFFF',
     primaryContainer: '#EADDFF',
     onPrimaryContainer: '#21005D',
 
-    secondary: brandColors.secondary,
+    secondary: '#8c8b8b', //brandColors.secondary,
     onSecondary: '#FFFFFF',
     secondaryContainer: '#E8DEF8',
     onSecondaryContainer: '#1D192B',
@@ -31,7 +31,7 @@ export const LightTheme: MD3Theme = {
     onTertiaryContainer: '#31111D',
 
     error: brandColors.error,
-    onError: '#FFFFFF',
+    onError: 'hsl(0, 0%, 100%)',
     errorContainer: '#F9DEDC',
     onErrorContainer: '#410E0B',
 
@@ -71,7 +71,7 @@ export const DarkTheme: MD3Theme = {
   roundness: 3,
   colors: {
     ...MD3DarkTheme.colors,
-    primary: '#118383',
+    primary: '#118383', //
     onPrimary: '#381E72',
     primaryContainer: '#4F378B',
     onPrimaryContainer: '#EADDFF',
