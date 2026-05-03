@@ -1,25 +1,10 @@
 import React from 'react';
-import { View, StyleSheet, Linking } from 'react-native';
-import { Text, Surface, useTheme } from 'react-native-paper';
+import { View, StyleSheet } from 'react-native';
+import { Text, Surface, useTheme, Button } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
-const APP_DOWNLOAD_URL = process.env.EXPO_PUBLIC_PATIENT_APP_DOWNLOAD_URL;
 
 export default function Congratulations() {
   const theme = useTheme();
-
-  const handleDownload = async () => {
-    if (APP_DOWNLOAD_URL) {
-      const supported = await Linking.canOpenURL(APP_DOWNLOAD_URL);
-      if (supported) {
-        await Linking.openURL(APP_DOWNLOAD_URL);
-      } else {
-        console.warn('Cannot open URL:', APP_DOWNLOAD_URL);
-      }
-    } else {
-      console.warn('APP_DOWNLOAD_URL is not defined');
-    }
-  };
 
   return (
     <View style={[styles.container, { backgroundColor: theme.colors.background }]}>
@@ -38,6 +23,17 @@ export default function Congratulations() {
         <Text variant="bodyMedium" style={styles.body}>
           Tu cuenta ha sido activada correctamente.{'\n'}
         </Text>
+        <Button
+          style={{
+            marginTop: 20,
+            backgroundColor: '#00A896',
+          }}
+          onPress={() => navigation.navigate('SignIn')}
+          mode="contained"
+          buttonColor="#2c9687"
+        >
+          Iniciar sesión
+        </Button>
       </Surface>
     </View>
   );

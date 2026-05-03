@@ -6,7 +6,6 @@ import { useTheme } from 'react-native-paper';
 import PublicRoute from 'src/core/router/PublicRoute';
 import PrivateRoute from 'src/core/router/PrivateRoute';
 import { ScreenParamList } from 'src/shared/types/types';
-import Frecuency from 'src/modules/frecuency/Frecuency';
 import PatientQuestionary from 'src/modules/patient-questionary/adapters/in/components/PatientQuestionary';
 import PatientQuestionarySuccess from 'src/modules/patient-questionary/adapters/in/components/PatientQuestionarySucess';
 import ActivatePatient from 'src/modules/patient/in/ActivatePatient/ActivePatient';
@@ -60,24 +59,6 @@ function Screens() {
   return (
     <NavigationContainer linking={linking}>
       <Stack.Navigator initialRouteName="SignUp">
-        <Stack.Screen
-          name="Frecuency"
-          options={{
-            headerShown: false,
-            headerTitle: 'Frecuency',
-            headerTitleStyle: {
-              ...styles.headerTitleStyle,
-            },
-            headerStyle: {
-              ...styles.headerStyle,
-            },
-          }}
-          component={() => (
-            <PublicRoute>
-              <Frecuency />
-            </PublicRoute>
-          )}
-        />
         {/* <Stack.Screen
                   name="SignUp"
                   options={() => ({
