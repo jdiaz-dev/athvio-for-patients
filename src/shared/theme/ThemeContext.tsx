@@ -21,7 +21,7 @@ const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 // ─── Provider ────────────────────────────────────────────────────────────────
 export function ThemeContextProvider({ children }: { children: React.ReactNode }) {
   const systemScheme = useColorScheme();
-  const [themeMode, setThemeMode] = useState<ThemeMode>('dark');
+  const [themeMode, setThemeMode] = useState<ThemeMode>('light');
   const [isLoaded, setIsLoaded] = useState(false); // ← guard
 
   // 1. Load stored theme once on mount
